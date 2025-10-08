@@ -1,11 +1,18 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+// Replace 'golden-swift-bank' with your actual repository name if different
+const repoName = '/golden-swift-bank/'; 
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // If you had a custom port in CRA, you can set it here
+  
+  // 🔑 FIX: Set the base path for deployment to a GitHub Pages sub-directory
+  base: repoName, 
+  
+  // The server block is fine for local development
   server: {
      port: 3000,
-   },
+  },
 });
