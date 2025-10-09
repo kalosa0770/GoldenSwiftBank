@@ -12,7 +12,7 @@ const Header = () => {
             </div>
 
             {/* Notification Icon (ABSOLUTE Far Right) */}
-            <button className="rounded-full hover:bg-amber-100/50 transition duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 **-mr-2 sm:-mr-4**">
+            <button className="rounded-full hover:bg-amber-100/50 transition duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 **-mr-4 sm:-mr-4**">
                 {/* The Bell icon itself still defines its size and color */}
                 <Bell className="text-gray-800 hover:text-amber-600 w-6 h-6 sm:w-7 sm:h-7" />
             </button>

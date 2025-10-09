@@ -1,26 +1,94 @@
-import React from "react";
-import { EyeClosed, Check } from 'lucide-react';
+import React, {useState} from "react";
+import { EyeClosed, Check, ArrowRight, Wallet, Banknote, Currency, Target} from 'lucide-react';
 
 const CheckBalance = () => {
+    const [checkBalance, setCheckBalance] = useState(true);
+
+    const viewBal = () => {
+        setCheckBalance(!checkBalance);
+    }
+
     return (
-        <div className="bg-gradient-to-br from-blue-700 to-blue-500 flex flex-col p-6 rounded-2xl shadow-2xl shadow-blue-500/50 transition duration-300 hover:shadow-blue-500/80"> 
-            <div className="flex justify-between items-center px-1">
-                <h1 className="text-white font-bold text-xl">Main Balance</h1>
-                <button className="p-1 rounded-full text-white/90 hover:text-amber-300 transition duration-150">
-                    <EyeClosed className="w-6 h-6" /> 
-                </button>
-            </div>
-            <div className="flex flex-col items-center justify-center text-center pt-8 pb-4">
-                <p className="text-white text-4xl sm:text-5xl font-extrabold tracking-widest">******</p>
-                <div className="flex flex-wrap justify-center gap-3 pt-6">
-                    <button className="flex items-center bg-teal-500 hover:bg-teal-600 text-white rounded-full py-1.5 px-3 shadow-md ring-1 ring-white/40 transition duration-150 text-sm">
-                       <Check className="w-4 h-4 mr-1"/> 
-                       <p className="font-semibold">Verified</p>
-                    </button>
-                    <button className="flex items-center bg-amber-500 hover:bg-amber-600 text-white rounded-full py-1.5 px-3 shadow-md ring-1 ring-white/40 transition duration-150 text-sm">
-                       <p className="font-semibold">KYC Level 2</p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 w-full gap-4">
+            {/* Card 1: Main Balance */}
+            <div className="bg-white flex flex-col p-6 rounded-2xl shadow-xl border border-gray-100 transition duration-300 hover:scale-[1.01] hover:shadow-2xl hover:shadow-blue-500/50"> 
+                <div className="flex justify-between items-center px-1">
+                    <h1 className="text-gray-800 font-bold text-xl">Main Balance</h1>
+                    <button className="p-1 rounded-full bg-gray-50 text-gray-800 hover:text-amber-500 transition duration-150">
+                        <Wallet className="w-6 h-6" /> 
                     </button>
                 </div>
+                <div className="items-center justify-center text-center pt-8 pb-6">
+                    {/* Emphasizing balance for visual appeal */}
+                    {
+                    checkBalance 
+                    
+                        ? '********' 
+                        
+                        : <p className="text-4xl text-gray-700 font-extrabold tracking-tight" onChange={setCheckBalance} >$500</p> 
+                    
+                    }
+                </div>
+                <a href="#view" className="text-center justify-center flex items-center hover:text-amber-800 text-amber-600 ro py-2 px-3 font-semibold text-sm"
+                    onClick={viewBal}
+                 >
+                    <p>View Balance </p>
+                    <ArrowRight className="w-4 h-4 ml-1"/>
+                </a>
+            </div>
+            
+            {/* Card 2, 3, 4: (Use the same updated styling for these) */}
+            
+            {/* Card 2: Transactions */}
+            <div className="flex flex-col bg-white p-6 rounded-2xl shadow-xl border border-gray-100 transition duration-300 hover:scale-[1.01] hover:shadow-2xl hover:shadow-blue-500/50">
+                <div className="flex justify-between items-center px-1">
+                    <h1 className="text-gray-800 font-bold text-xl ">Transactions</h1>
+                    <button className="p-1 rounded-full bg-gray-50 text-gray-800 hover:text-amber-500 transition duration-150">
+                        <Banknote className="w-6 h-6" /> 
+                    </button>
+                </div>
+                <div className="items-center justify-center text-center pt-8 pb-6">
+                    <p className="text-4xl text-gray-700 font-extrabold tracking-tight">27</p>
+                </div>
+                <a href="#all" className="text-center justify-center flex items-center hover:text-amber-800 text-amber-600 ro py-2 px-3 font-semibold text-sm">
+                    <p>View all transactions </p>
+                    <ArrowRight className="w-4 h-4 ml-1"/>
+                </a>
+            </div>
+            
+            {/* Card 3: Currencies */}
+            <div className="flex flex-col bg-white p-6 rounded-2xl shadow-xl border border-gray-100 transition duration-300 hover:scale-[1.01] hover:shadow-2xl hover:shadow-blue-500/50">
+                <div className="flex justify-between items-center px-1">
+                    <h1 className="text-gray-800 font-bold text-xl ">Currencies</h1>
+                    <button className="p-1 rounded-full bg-gray-50 text-gray-800 hover:text-amber-500 transition duration-150">
+                        <Currency className="w-6 h-6" /> 
+                    </button>
+                </div>
+                <div className="items-center justify-center text-center pt-8 pb-6">
+                    <p className="text-4xl text-gray-700 font-extrabold tracking-tight">4</p>
+                </div>
+                <a href="#currencies" className="text-center justify-center flex items-center hover:text-amber-800 text-amber-600 ro py-2 px-3 font-semibold text-sm">
+                    <p>View all currencies</p>
+                    <ArrowRight className="w-4 h-4 ml-1"/>
+                </a>
+            </div>
+            
+            {/* Card 4: Savings Goal */}
+            <div className="flex flex-col bg-white p-6 rounded-2xl shadow-xl border border-gray-100 transition duration-300 hover:scale-[1.01] hover:shadow-2xl hover:shadow-blue-500/50">
+                <div className="flex justify-between items-center px-1">
+                    <h1 className="text-gray-800 font-bold text-xl ">KYC</h1>
+                    <button className="p-1 rounded-full bg-gray-50 text-gray-800 hover:text-amber-500 transition duration-150">
+                        <Target className="w-6 h-6" /> 
+                    </button>
+                </div>
+                <div className="items-center justify-center text-center pt-8 pb-6">
+                    {/* Show a percentage or goal status */}
+                    <p className="text-4xl text-gray-700 font-extrabold tracking-tight">Verified</p>
+                </div>
+                <a href="#details" className="text-center justify-center flex items-center hover:text-amber-800 text-amber-600 ro py-2 px-3 font-semibold text-sm">
+                    <p>View Details</p> {/* Changed text */}
+                    <ArrowRight className="w-4 h-4 ml-1"/>
+                </a>
             </div>
         </div>
     );
