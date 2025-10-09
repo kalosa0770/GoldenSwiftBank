@@ -5,11 +5,9 @@ import './App.css';
 
 function App() {
   return (
-    <div className="font-[sans]">
-      <header className="flex flex-col">
-        <UserDashboard />
-      </header>
-    </div>
+    <main className="relative min-h-screen bg-gray-50 font-[sans] antialiased">
+      <UserDashboard />
+    </main>
   );
 }
 

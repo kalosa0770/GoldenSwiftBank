@@ -14,10 +14,9 @@ const FooterNav = ({ active = 'Home' }) => {
 
     return (
         // Fixed bottom container
-        <div className="fixed bottom-0 left-0 right-0 z-50 
-                      bg-white shadow-2xl border-t border-gray-100 p-2">
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white shadow-[0_-4px_10px_rgba(0,0,0,0.05)] pt-2 pb-safe md:hidden">
             
-            <div className="flex justify-around items-center max-w-lg mx-auto">
+            <div className="flex justify-around items-center h-16 max-w-xl mx-auto">
                 {navItems.map((item) => {
                     const isActive = item.name === active;
                     

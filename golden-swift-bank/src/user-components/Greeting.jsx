@@ -3,20 +3,22 @@ import { EyeClosed, Check } from 'lucide-react';
 
 const CheckBalance = () => {
     return (
-        <div className="shadow-xl bg-blue-600 flex flex-col p-5 rounded-xl"> 
+        <div className="bg-gradient-to-br from-blue-700 to-blue-500 flex flex-col p-6 rounded-2xl shadow-2xl shadow-blue-500/50 transition duration-300 hover:shadow-blue-500/80"> 
             <div className="flex justify-between items-center px-1">
-                <h1 className="text-white font-bold text-lg">Main Balance</h1>
-                <EyeClosed className="text-white hover:text-amber-400 cursor-pointer" size={24} /> 
+                <h1 className="text-white font-bold text-xl">Main Balance</h1>
+                <button className="p-1 rounded-full text-white/90 hover:text-amber-300 transition duration-150">
+                    <EyeClosed className="w-6 h-6" /> 
+                </button>
             </div>
-            <div className="flex flex-col items-center justify-center text-center pt-8">
-                <p className="text-white text-3xl font-extrabold tracking-widest">******</p>
-                <div className="flex gap-4 pt-6">
-                    <button className="justify-center items-center bg-teal-600 hover:bg-teal-700 text-white rounded-full p-2 border-0 flex shadow-md">
-                       <Check size={16} /> 
-                       <p className="text-xs ps-1 px-1 font-semibold">Verified</p>
+            <div className="flex flex-col items-center justify-center text-center pt-8 pb-4">
+                <p className="text-white text-4xl sm:text-5xl font-extrabold tracking-widest">******</p>
+                <div className="flex flex-wrap justify-center gap-3 pt-6">
+                    <button className="flex items-center bg-teal-500 hover:bg-teal-600 text-white rounded-full py-1.5 px-3 shadow-md ring-1 ring-white/40 transition duration-150 text-sm">
+                       <Check className="w-4 h-4 mr-1"/> 
+                       <p className="font-semibold">Verified</p>
                     </button>
-                    <button className="justify-center items-center bg-amber-500 hover:bg-amber-600 text-white rounded-full p-2 border-0 flex shadow-md">
-                       <p className="text-xs ps-1 px-1 font-semibold">KYC Level 2</p>
+                    <button className="flex items-center bg-amber-500 hover:bg-amber-600 text-white rounded-full py-1.5 px-3 shadow-md ring-1 ring-white/40 transition duration-150 text-sm">
+                       <p className="font-semibold">KYC Level 2</p>
                     </button>
                 </div>
             </div>

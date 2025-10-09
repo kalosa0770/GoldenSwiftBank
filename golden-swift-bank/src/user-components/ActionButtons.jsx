@@ -2,34 +2,43 @@ import React from "react";
 import { Send, SendToBack, ArrowDownCircle, ArrowUpCircle, ReceiptText, Phone } from 'lucide-react'
 
 const ActionButtons = () => {
+    const actions = [
+        { name: 'Send', icon: Send, primary: true }, // Highlighted action
+        { name: 'Request', icon: SendToBack, primary: false },
+        { name: 'Cash In', icon: ArrowDownCircle, primary: false },
+        { name: 'Cash Out', icon: ArrowUpCircle, primary: false },
+        { name: 'Pay Bills', icon: ReceiptText, primary: false },
+        { name: 'Airtime', icon: Phone, primary: false },
+    ];
+
     return (
-        <div className="flex flex-col">
-            <h1 className="text-gray-600 text-sm mb-3">Quick Actions</h1>
-            <div className="overflow-x-scroll overflow-hidden flex gap-3 w-full p-2 bg-gray-50">
-                <button className="flex flex-col border border-blue-800  text-blue-800 shadow-sm rounded-lg px-4 py-2 font-semibold whitespace-nowrap hover:bg-amber-600 transition duration-300">
-                    <Send />
-                    Send 
-                </button>
-                <button className="flex flex-col border border-blue-800 text-blue-800 shadow-sm rounded-lg px-4 py-2 whitespace-nowrap hover:bg-blue-50 transition duration-300">
-                    <SendToBack />
-                    Request
-                </button>
-                <button className="border border-blue-800 text-blue-800 shadow-sm rounded-lg px-4 py-2 whitespace-nowrap hover:bg-blue-50 transition duration-300">
-                    <ArrowDownCircle />
-                    Cash In
-                </button>
-                <button className="border border-blue-800 text-blue-800 shadow-sm rounded-lg px-4 py-2 whitespace-nowrap hover:bg-blue-50 transition duration-300">
-                    <ArrowUpCircle />
-                    Cash Out
-                </button>
-                <button className="border border-blue-800 text-blue-800 shadow-sm rounded-lg px-4 py-2 whitespace-nowrap hover:bg-blue-50 transition duration-300">
-                    <ReceiptText />
-                    Pay Bills
-                </button>
-                <button className="border border-blue-800 text-blue-800 shadow-sm rounded-lg px-4 py-2 whitespace-nowrap hover:bg-blue-50 transition duration-300">
-                    <Phone />
-                    Airtime
-                </button>
+        <div className="space-y-3">
+            <h1 className="text-gray-700 font-bold text-lg">Quick Actions</h1>
+
+            {/* Horizontal scroll container with modified large-screen behavior */}
+            <div className="flex space-x-3 overflow-x-scroll no-scrollbar py-2 -mx-4 px-4 sm:mx-0 sm:px-0">
+                {actions.map((action, index) => (
+                    <button
+                        key={index}
+                        // *** MODIFIED BUTTON STYLING FOR LG SCREENS ***
+                        className={`flex-shrink-0 flex flex-col items-center justify-center 
+                                    rounded-xl p-3 w-24 h-24 whitespace-nowrap 
+                                    font-semibold text-xs shadow-md transition duration-200 
+                                    transform hover:scale-[1.02] active:scale-95
+                                    
+                                    // On large screens, set the width to 1/3 of the container, minus spacing
+                                    lg:w-[calc((100%-0.75rem*2)/3)] 
+                                    lg:flex-grow lg:flex-shrink 
+                                    
+                                    ${action.primary 
+                                        ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-500/50' 
+                                        : 'bg-white text-gray-700 border border-gray-100 hover:bg-blue-50'
+                                    }`}
+                    >
+                        <action.icon className={`w-6 h-6 mb-1 ${action.primary ? 'text-white' : 'text-amber-500'}`} />
+                        <span>{action.name}</span>
+                    </button>
+                ))}
             </div>
         </div>
     );
