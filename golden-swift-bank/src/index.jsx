@@ -1,6 +1,7 @@
 // Use the client import for React 18
 import React from 'react';
 import { createRoot } from 'react-dom/client'; 
+import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'; // CRITICAL: Check the extension matches!
 import './index.css'; // or your main CSS file
 
@@ -9,6 +10,8 @@ const root = createRoot(container); // create a root
 
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter basename="/GoldenSwiftBank">
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );

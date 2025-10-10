@@ -2,12 +2,20 @@ import React, {useState} from 'react';
 import Logo from '../assets/logo.jpeg';
 import BackgroundImg from '../assets/ladyImg.jpeg';
 import { useNavigate } from 'react-router-dom';
+import { EyeClosed, EyeIcon } from 'lucide-react'; 
 
 const LoginForm = ({isLoggedin}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const [message, setMessage] = useState('');
+
+    //View password
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePassword = () => {
+        setShowPassword(!showPassword);
+    }
 
     // const handleLogin = (e) => {
     //     e.preventDefault();
@@ -69,14 +77,22 @@ const LoginForm = ({isLoggedin}) => {
                         {/* Password Input - Improved Structure */}
                         <div className="flex flex-col gap-2 w-full">
                             <label htmlFor="password" className="text-gray-700 font-bold">Password</label>
-                            <input 
-                                id="password"
-                                type="password" 
-                                placeholder="Enter your password" 
-                                className="border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 text-gray-800 p-3 rounded-lg transition duration-150"
-                                onChange={e => setPassword(e.target.value)}
-                                required
-                            />
+                            <div className="relative">
+                                <input 
+                                    id="password"
+                                    type={showPassword ? "text" : "password"} 
+                                    placeholder="Enter your password" 
+                                    className="block w-full border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 text-gray-800 p-3 rounded-lg transition duration-150"
+                                    onChange={e => setPassword(e.target.value)}
+                                    required
+                                />
+                                <span
+                                    className="absolute inset-y-0 end-0 flex items-center px-3 cursor-pointer text-amber-600"
+                                    onClick={togglePassword}
+                                >
+                                    {showPassword ? <EyeIcon size={20} /> : <EyeClosed size={20} />}
+                                </span>
+                            </div>
                         </div>
                         
                         {/* Login Button - Added */}

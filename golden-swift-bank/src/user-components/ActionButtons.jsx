@@ -16,7 +16,7 @@ const ActionButtons = () => {
             <h1 className="text-gray-700 font-bold text-lg">Quick Actions</h1>
 
             {/* Horizontal scroll container with modified large-screen behavior */}
-            <div className="flex space-x-3 overflow-x-scroll no-scrollbar py-2 -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div className="flex space-x-3 overflow-x-scroll overflow-hidden no-scrollbar py-2 -mx-4 px-4 sm:mx-0 sm:px-0">
                 {actions.map((action, index) => (
                     <button
                         key={index}
