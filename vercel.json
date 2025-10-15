@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "builds": [
+    {
+     
+      "src": "golden-swift-bank/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "golden-swift-bank/dist",
+        "buildCommand": "npm run build" 
+      }
+    },
+    {
+      "src": "backend-code/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "backend-code/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "golden-swift-bank/dist/$1"
+    }
+  ]
+}
