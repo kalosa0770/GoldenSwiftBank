@@ -6,7 +6,7 @@
       "use": "@vercel/node"
     },
     {
-      "src": "golden-swift-bank/vite.config.js",
+      "src": "golden-swift-bank/package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "golden-swift-bank/dist"
