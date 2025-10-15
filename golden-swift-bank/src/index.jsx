@@ -10,7 +10,7 @@ const root = createRoot(container); // create a root
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename="/GoldenSwiftBank">
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </React.StrictMode>
