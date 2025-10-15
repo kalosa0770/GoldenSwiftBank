@@ -9,7 +9,7 @@
       "src": "golden-swift-bank/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "golden-swift-bank/dist"
+        "distDir": "dist"
       }
     }
   ],
