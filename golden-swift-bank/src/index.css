@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.slide-enter-active {
+  animation: slideIn 0.3s forwards;
+}
+
+.slide-exit-active {
+  animation: slideOut 0.3s forwards;
+}
+
+/* Keyframes for sliding left (Next button) */
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-100%); opacity: 0; }
+}
+
+/* Keyframes for sliding right (Prev button) - Reverse direction */
+.slide-back-enter-active {
+  animation: slideInBack 0.3s forwards;
+}
+
+.slide-back-exit-active {
+  animation: slideOutBack 0.3s forwards;
+}
+
+@keyframes slideInBack {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutBack {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
