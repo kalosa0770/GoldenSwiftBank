@@ -64,7 +64,8 @@ const SignUp = () => {
         }
 
         try {
-            const url ="http://localhost:3001/api/users";
+            const url = "/api/users";
+
             const {data:res} = await axios.post(url, data);
             navigate('/login', { 
                 state: { 
