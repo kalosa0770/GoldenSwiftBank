@@ -20,7 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/golden-swift-bank/dist/$1"
+      "dest": "/golden-swift-bank/dist/index.html"
     }
   ],
   "buildCommand": "cd golden-swift-bank && npm install --include=dev && npm run build"
