@@ -1,5 +1,4 @@
-// App.js (This is what you need to implement in your main routing file)
-
+// App.js 
 import React from 'react'; // NOTE: Removed useState
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import HomePage from './components/HomePage';
