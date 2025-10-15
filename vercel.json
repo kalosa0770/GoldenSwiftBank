@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend-code/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "golden-swift-bank/vite.config.js",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "golden-swift-bank/dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend-code/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/golden-swift-bank/dist/$1"
+    }
+  ],
+  "buildCommand": "cd golden-swift-bank && npm install --include=dev && npm run build"
+}
