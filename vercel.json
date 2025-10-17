@@ -14,7 +14,7 @@
       "src": "golden-swift-bank/index.html",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "gold-swift-bank/dist" 
+        "distDir": "golden-swift-bank/dist" 
       }
     }
   ],
@@ -22,12 +22,12 @@
     
     {
       "src": "/api/(.*)",
-      "dest": "backend-code/api/index.js"
+      "dest": "backend-code/server.js"
     },
     
     {
       "src": "/(.*)",
-      "dest": "gold-swift-bank/dist/$1"
+      "dest": "golden-swift-bank/dist/$1"
     }
   ]
 }
