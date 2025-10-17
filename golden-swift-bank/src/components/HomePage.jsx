@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import Logo from '../assets/logo.jpeg';
 import LadyImg from '../assets/ladyImg.jpeg';
+import {Link} from 'react-router-dom'
 import { Menu, X, ArrowRight, ArrowLeft, Zap, ShieldCheck, TrendingUp, MapPin, ReceiptText, Signal, Facebook, Twitter, Linkedin } from 'lucide-react';
  
 
@@ -27,10 +28,14 @@ const Header = ({onLoginClick, onSignUpClick}) => {
                     <li><a href="#" className='no-underline text-gray-700 hover:text-amber-500 transition duration-150 font-semibold'>About</a></li>
                     <li><a href="#" className='no-underline text-gray-700 hover:text-amber-500 transition duration-150 font-semibold'>Services</a></li>
                     <li className='bg-blue-600 hover:bg-blue-500 text-white rounded-full py-2 px-5 text-sm font-semibold transition duration-200'>
-                        <a href="#" className='decoration-none text-white' onClick={onLoginClick} >Sign in</a>
+                       <Link to="/login">
+                         <button  className='border-none text-white'>Sign in</button>
+                       </Link> 
                     </li>
                     <li className='bg-amber-500 hover:bg-amber-400 text-white rounded-full py-2 px-5 text-sm font-bold transition duration-200 shadow-lg'>
-                        <a href="#" className='decoration-none text-white' onClick={onSignUpClick}>Sign up</a>
+                       <Link to="/signup">
+                            <button className='border-none text-white'>Sign up</button>
+                       </Link> 
                     </li>
                 </ul>
 
@@ -51,11 +56,15 @@ const Header = ({onLoginClick, onSignUpClick}) => {
                         <li><a href="#" className='no-underline text-gray-700 hover:text-amber-500 font-semibold'>Home</a></li>
                         <li><a href="#" className='no-underline text-gray-700 hover:text-amber-500 font-semibold'>About</a></li>
                         <li><a href="#" className='no-underline text-gray-700 hover:text-amber-500 font-semibold'>Services</a></li>
-                        <li className='bg-blue-600 hover:bg-blue-500 text-white rounded-full py-2 px-5 text-sm font-semibold'>
-                            <a href="#" className='decoration-none text-white' onClick={onLoginClick}>Sign in</a>
+                        <li className='bg-blue-600 hover:bg-blue-500 text-white rounded-full py-2 px-5 text-sm font-semibold transition duration-200'>
+                            <Link to="/login">
+                                <button  className='border-none text-white'>Sign in</button>
+                            </Link> 
                         </li>
-                        <li className='bg-amber-500 hover:bg-amber-400 text-white rounded-full py-2 px-5 text-sm font-bold shadow-lg'>
-                            <a href="#" className='decoration-none text-white' onClick={onSignUpClick}>Sign up</a>
+                        <li className='bg-amber-500 hover:bg-amber-400 text-white rounded-full py-2 px-5 text-sm font-bold transition duration-200 shadow-lg'>
+                            <Link to="/signup">
+                                    <button className='border-none text-white'>Sign up</button>
+                            </Link> 
                         </li>
                     </ul>
                 </div>

@@ -1,3 +1,4 @@
+// vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -7,9 +8,14 @@ export default defineConfig({
   build: {
     outDir: 'dist'
   },
+  // 💡 UNCOMMENT AND USE THIS FOR LOCAL DEVELOPMENT 💡
   server: {
     proxy: {
-      '/api': 'http://localhost:3001'
+      // Directs any call starting with /api (e.g., /api/auth) to your local backend
+      '/api': {
+        target: 'http://localhost:3001', 
+        changeOrigin: true,
+      }
     }
   }
 });
