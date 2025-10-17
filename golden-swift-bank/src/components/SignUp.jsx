@@ -1,3 +1,4 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -52,8 +53,10 @@ const SignUp = () => {
     }
 
     try {
-      // 🎯 MODIFICATION START: Capture the response object 🎯
-      const response = await axios.post("http://localhost:3001/api/users", data);
+      // 🎯 FIX: Construct the full URL using the environment variable
+      const url = `${API_BASE_URL}/api/users`;
+      
+      const response = await axios.post(url, data);
       
       const token = response.data.token; // Access the token field
       
@@ -61,18 +64,13 @@ const SignUp = () => {
         // 1. Store the token for future authenticated requests
         localStorage.setItem("authToken", token); 
         
-        // 2. Establish the session (e.g., update context/state with user data)
-        // You might want to store user details (response.data.user) here too.
-        
-        // 3. Navigate the user directly to a protected route (e.g., dashboard)
-        // Since they registered and received a valid token, they are already logged in.
+        // 2. Navigate the user directly to a protected route (e.g., dashboard)
         navigate("/dashboard"); 
 
       } else {
-        // Fallback: If registration was successful but no token was returned (unlikely now)
+        // Fallback: This path should be rare if the backend is working
         navigate("/login", { state: { message: "Account created successfully! Please log in." } });
       }
-      // 🎯 MODIFICATION END 🎯
       
     } catch (err) {
       setError(err.response?.data?.message || "Signup failed. Please try again.");

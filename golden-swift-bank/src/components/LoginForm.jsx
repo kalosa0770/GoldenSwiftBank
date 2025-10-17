@@ -1,6 +1,9 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+
+
 
 const LoginForm = ({onLoginSuccess}) => {
   const location = useLocation();
@@ -37,7 +40,7 @@ const LoginForm = ({onLoginSuccess}) => {
     e.preventDefault();
     try {
       // API call to authenticate
-      const url = 'http://localhost:3001/api/auth'; 
+      const url = `${API_BASE_URL}/api/auth`; 
       const response = await axios.post(url, data);
 
       const token = response?.data.token;
