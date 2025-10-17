@@ -1,29 +1,33 @@
-
 {
   "version": 2,
   "builds": [
+    
     {
-      "src": "server.js",
-      "use": "@vercel/node"
+      "src": "backend-code/server.js",
+      "use": "@vercel/node",
+      "config": {
+        "maxLambdaSize": "15mb"
+      }
     },
+   
     {
-      "src": "index.jsx",
+      "src": "gold-swift-bank/index.jsx",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "gold-swift-bank/dist" 
       }
     }
   ],
   "routes": [
+    
     {
-      
       "src": "/api/(.*)",
-      "dest": "api/index.js"
+      "dest": "backend-code/api/index.js"
     },
+    
     {
-     
       "src": "/(.*)",
-      "dest": "dist/$1"
+      "dest": "gold-swift-bank/dist/$1"
     }
   ]
 }
