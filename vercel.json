@@ -20,8 +20,13 @@
       "dest": "backend-code/server.js"
     },
     {
+        "src": "/static/(.*)",
+        "dest": "golden-swift-bank/dist/static/$1"
+    },
+    {
+    
       "src": "/(.*)",
-      "dest": "golden-swift-bank/dist/$1" 
+      "dest": "golden-swift-bank/dist/index.html" 
     }
   ]
 }
