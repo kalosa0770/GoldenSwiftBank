@@ -39,3 +39,8 @@
   from { transform: translateX(0); opacity: 1; }
   to { transform: translateX(100%); opacity: 0; }
 }
+
+/* Additional custom styles can be added here */
+.slick-slide > div {
+  margin: 0 10px;
+}

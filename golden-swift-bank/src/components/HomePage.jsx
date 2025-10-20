@@ -1,41 +1,49 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useMemo} from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import Logo from '../assets/logo.jpeg';
 import LadyImg from '../assets/ladyImg.jpeg';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
 import { Menu, X, ArrowRight, ArrowLeft, Zap, ShieldCheck, TrendingUp, MapPin, ReceiptText, Signal, Facebook, Twitter, Linkedin } from 'lucide-react';
- 
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // Header Section
 const Header = ({onLoginClick, onSignUpClick}) => {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <header className="w-full bg-gray-200 p-4 shadow-2xl relative z-20">
+        <header className="fixed top-0 z-20 w-full bg-gray-200 p-4 shadow-2xl">
             <nav className="flex items-center justify-between max-w-7xl mx-auto">
                 {/* Logo */}
                 <div className="flex items-center">
                     <img 
                         src={Logo} 
                         alt="Golden Swift Logo" 
-                        className='w-14 h-14 rounded-full border-2 border-amber-500 shadow-md shadow-amber-500' 
+                        className='w-14 h-14 rounded-full shadow-md shadow-blue-100' 
                     />
+                    <div className="flex flex-col font-bold py-1 px-2">
+                        <h1 className='text-blue-800'>Golden Swift</h1>
+                        <p className='text-gray-600 text-sm'>One wallet. Everything connected</p>
+                    </div>
                 </div>
 
                 {/* Desktop Nav */}
                 <ul className="hidden md:flex items-center gap-6 list-none text-sm">
-                    <li><a href="#" className='no-underline text-gray-700 hover:text-amber-500 transition duration-150 font-semibold'>Home</a></li>
-                    <li><a href="#" className='no-underline text-gray-700 hover:text-amber-500 transition duration-150 font-semibold'>About</a></li>
-                    <li><a href="#" className='no-underline text-gray-700 hover:text-amber-500 transition duration-150 font-semibold'>Services</a></li>
-                    <li className='bg-blue-600 hover:bg-blue-500 text-white rounded-full py-2 px-5 text-sm font-semibold transition duration-200'>
+                    <li className='bg-blue-700 hover:bg-blue-500 text-white font-bold rounded-lg py-3 px-2 text-sm transition duration-200'>
                        <Link to="/login">
-                         <button  className='border-none text-white'>Sign in</button>
+                         <button  className='border-none text-white'>Download App</button>
                        </Link> 
                     </li>
-                    <li className='bg-amber-500 hover:bg-amber-400 text-white rounded-full py-2 px-5 text-sm font-bold transition duration-200 shadow-lg'>
-                       <Link to="/signup">
-                            <button className='border-none text-white'>Sign up</button>
+                    <li className='bg-none border-2 border-amber-500 hover:bg-blue-500 text-blue-700 font-bold rounded-lg py-3 px-2 text-sm transition duration-200'>
+                       <Link to="/login">
+                         <button>Sign in</button>
                        </Link> 
+                    </li>
+                    <li className='border-none transparent text-gray-900'>
+                    
+                            <button><Menu /></button>
+                       
                     </li>
                 </ul>
 
@@ -73,121 +81,246 @@ const Header = ({onLoginClick, onSignUpClick}) => {
     );
 };
 
-// Call to Action Section
-const CallToAction = () => (
-    <div className="grid md:grid-cols-2 gap-[10vw] grid-cols-1 items-center justify-center w-full text-center py-20 px-8">
+
+const CurvedUnderline = ({ children}) => (
+    <span className={`relative inline-block px-1`}>
+        {/* The Text */}
+        {children}
         
-        {/* Headline: Use deep navy for authority, with a strong amber highlight */}
-        <div className="flex flex-col w-full text-start ">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-                Enjoy Instant Transfers & Smart Saving
+        {/* The Curved Line Element (uses inline style for custom border-radius) */}
+        <span 
+            className={`absolute bottom-0 left-0 right-0 h-2 opacity-100`}
+            style={{
+                // Custom CSS to create the arc effect
+                borderTop: `3px solid`,
+                borderColor: 'gray', // Inherits the amber color
+                borderRadius: '50% 50% 0 0',
+                transform: 'translateY(4px)' // Pushes the curve slightly below the baseline
+            }}
+        ></span>
+    </span>
+);
+
+const CallToAction = () => {
+    return (
+
+            
+            <div className="grid md:grid-cols-2 gap-[5vw] lg:gap-[10vw] grid-cols-1 items-center bg-gray-100 w-full min-h-screen pt-32 md:pt-32 pb-20 px-0 sm:px-6 md:px-10">
+            
+                {/* Headline/Value Proposition Column */}
+                <div className="flex flex-col w-full text-start justify-center px-6 md:px-0 py-3">
+                    
+                    <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight leading-snug">
+                        Send, pay and manage money—all from one wallet.
+                    </h1>
+                    
+                    {/* Changed font-bold to font-medium for subtext readability */}
+                    <p className="text-xs md:text-lg font-medium text-gray-600 drop-shadow-sm mb-8 max-w-xl tracking-tight leading-normal">
+                        <CurvedUnderline ><span className="text-dark-900">Golden Swift</span></CurvedUnderline>connects overseas communities, local citizens, institutions through one secure wallet. We
+                        offer lower fees, instant settlements and seamless integrations for schools, merchants and government.
+                    </p>
+                    
+                    {/* PRIMARY CTA BUTTON (Re-added for complete section) */}
+                    <button
+                        type="button"
+                        className="bg-blue-700 hover:bg-sky-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-200 w-fit"
+                    >
+                        Start Saving Today
+                    </button>
+                    
+                </div>
+
+                {/* Sending Form Column - Responsive Mobile Style Applied */}
+                <div className="flex items-center justify-center pt-10 md:pt-0">
+                    {/* Mobile: rounded-t-2xl, no shadow, no padding | Desktop: fully rounded, shadow-xl, p-8 */}
+                    <div className="bg-white rounded-t-2xl md:rounded-2xl shadow-none md:shadow-xl w-full max-w-md md:p-8">
+                        {/* Heading is padded on mobile, reset on desktop */}
+                        <h2 className="text-2xl font-semibold mb-6 text-gray-800 p-6 md:p-0">Send Money Instantly</h2>
+                        
+                        {/* Form content is padded on mobile, reset on desktop */}
+                        <form className="flex flex-col gap-4 w-full p-6 pt-0 md:p-0">
+                            <div className="flex flex-col">
+                                <label htmlFor="sending-from" className="font-semibold text-gray-700 mb-1">Sending from</label>
+                                <select id="sending-from" className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                    <option value="">Select country</option>
+                                    <option value="Zambia">Zambia</option>
+                                    <option value="United States">United States</option>
+                                    <option value="China">China</option>
+                                </select>
+                            </div>
+                            <div className="flex flex-col">
+                                <label htmlFor="sending-to" className="font-semibold text-gray-700 mb-1">Sending to</label>
+                                <select id="sending-to" className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                    <option value="">Select country</option>
+                                    <option value="Zambia">Zambia</option>
+                                    <option value="United States">United States</option>
+                                    <option value="China">China</option>
+                                </select>
+                            </div>
+                            <button
+                                type="button"
+                                className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition duration-200 w-full"
+                            >
+                                Calculate Transfer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    );
+};
+
+const offersOptions = [
+    {
+        title: "Real-time FX",
+        description: "In-app conversations with live exchange rates and low fees."
+    },
+    {
+        title: "Merchants & Bills Payments",
+        description: "Pay for goods, services, utilities and school fees seamlessly."
+    },
+    {
+        title: "AgentNet",
+        description: "Agent dashboard, float and commission tracking"
+    },
+    {
+        title: "Security",
+        description: "Top-tier security and encryption to protect your data and transactions."
+    },
+];
+
+
+const Offers = () => {
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToScroll: 2,
+        slidesToScroll: 1,
+        arrows: false,
+        autoplay: true,
+        autoplaySpeed: 4000,
+        responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+    };
+    return (
+        <div className="flex flex-col items-center justify-center py-10 px-6 sm:px-12 bg-blue-700 gap-6 rounded-t-3xl shadow-2xl shadow-blue-900/50">
+            <h1 className='text-3xl lg:text-5xl text-white text-center font-extrabold tracking-tight mb-4'>
+                One wallet, everything connected
             </h1>
-            {/* Sub-Headline: Clean, readable gray text */}
-            <div className="text-lg md:text-xl font-medium text-gray-700 drop-shadow-sm mb-8 max-w-2xl">
-                Experience seamless banking, instant transfers, and smart savings—all at your fingertips.
-            </div>
-            {/* CTA Button: Strongest Blue (Primary Brand Action) */}
-        </div>
-
-        {/* Sending Form */}
-        <div className="flex items-center bg-gray-200 rounded-2xl shadow-sm p-6">
-            <form className="flex flex-col gap-4 w-full">
-                <div className="flex flex-col">
-                    <label htmlFor="sending-from" className="font-semibold text-gray-700 mb-1">Sending from</label>
-                    <select id="sending-from" className="p-2 rounded-lg border border-gray-300">
-                        <option value="">Select country</option>
-                        <option value="Zambia">Zambia</option>
-                        <option value="United States">United States</option>
-                        <option value="China">China</option>
-                    </select>
-                </div>
-                <div className="flex flex-col">
-                    <label htmlFor="sending-to" className="font-semibold text-gray-700 mb-1">Sending to</label>
-                    <select id="sending-to" className="p-2 rounded-lg border border-gray-300">
-                        <option value="">Select country</option>
-                        <option value="Zambia">Zambia</option>
-                        <option value="United States">United States</option>
-                        <option value="China">China</option>
-                    </select>
-                </div>
-                <button
-                    type="submit"
-                    className="mt-4 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-6 rounded-xl transition duration-200"
-                >
-                    Send money
-                </button>
-            </form>
-        </div> 
-    </div>
-);
-
-const Features = () => (
-    <section className="w-full py-10 px-8 bg-gray-50"> 
-        <div className="grid grid-cols-1 lg:grid-cols-2 max-w-7xl mx-auto rounded-3xl overflow-hidden shadow-2xl bg-white">
             
-            {/* LEFT SIDE: Image Container */}
-            <div className="flex bg-blue-100/50"> {/* Added a light blue background for the image container */}
-                <img 
-                    src={LadyImg} 
-                    alt="A woman using a mobile financial application" 
-                    className='w-full h-full object-cover lg:h-auto' // Use object-cover to ensure image fills the space cleanly
-                />
-            </div>
-            
-            {/* RIGHT SIDE: Text and Features Container */}
-            <div className="flex flex-col p-4 md:p-8 justify-center">
-                
-                {/* Tagline */}
-                <p className='text-sm uppercase tracking-widest text-gray-600 font-bold mb-3'>
-                    Easy, Secure, and Reliable
-                </p>
-                
-                {/* Main Headline */}
-                <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
-                    Why <br />Golden Swift?
-                </h1>
-                
-                {/* Feature List */}
-                <div className="space-y-6 mt-10">
-                    
-                    {/* Feature 1: Instant Transfer */}
-                    <div className='flex items-start space-x-4'>
-                        <Zap className="h-7 w-7 text-blue-500 flex-shrink-0 mt-1" />
-                        <div>
-                            <h2 className="text-xl font-bold text-gray-900">Instant Transfer.</h2>
-                            <p className="text-gray-600 mt-1">Send and receive money instantly, anytime, anywhere in the world.</p> 
-                        </div>
-                    </div>
-                    
-                    {/* Feature 2: Smart Savings */}
-                    <div className='flex items-start space-x-4'>
-                        <TrendingUp className="h-7 w-7 text-blue-500 flex-shrink-0 mt-1" />
-                        <div>
-                            <h2 className="text-xl font-bold text-gray-900">Smart Savings.</h2>
-                            <p className="text-gray-600 mt-1">Digitize your savings and reach your financial goals with smart tools.</p> 
-                        </div>
-                    </div>
-                    
-                    {/* Feature 3: Secure Banking */}
-                    <div className='flex items-start space-x-4'>
-                        <ShieldCheck className="h-7 w-7 text-blue-500 flex-shrink-0 mt-1" />
-                        <div>
-                            <h2 className="text-xl font-bold text-gray-900">Secure Banking.</h2>
-                            <p className="text-gray-600 mt-1">Your data and transactions are protected with top-tier security and encryption.</p> 
-                        </div>
-                    </div>
+                <div className="w-3/4 mx-auto">
+                    <Slider {...settings}>
+                        {offersOptions.map((offer, index) => {
+                            return (
+                                <div key={index} className="bg-white bg-opacity-20 backdrop-blur-md h-[250px] rounded-xl p-6 mb-6 shadow-lg hover:shadow-2xl transition duration-300">
+                                    <h2 className="text-2xl font-bold text-white mb-2">{offer.title}</h2>
+                                    <p className="text-white text-opacity-90">{offer.description}</p>
+                                </div>
+                            );
+                        })}
+                    </Slider>
                     
                 </div>
-                
-                {/* CTA Button */}
-                <button className='mt-12 w-full md:w-auto self-start bg-blue-600 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-[1.02] active:scale-95'>
-                    Get Started Today
-                </button>
-                
-            </div>
         </div>
-    </section>
-);
+    )
+}
+
+
+const Features = () => {
+    return (
+            <section className="w-full py-10 px-8 bg-gray-50"> 
+                <div className="grid grid-cols-1 md:grid-cols-2 max-w-7xl mx-auto rounded-3xl overflow-hidden shadow-2xl bg-white">
+                    
+                    {/* LEFT SIDE: Image Container */}
+                    <div className="flex bg-blue-100/50"> {/* Added a light blue background for the image container */}
+                        <img 
+                            src={LadyImg} 
+                            alt="A woman using a mobile financial application" 
+                            className='w-full h-full object-cover lg:h-auto' // Use object-cover to ensure image fills the space cleanly
+                        />
+                    </div>
+                    
+                    {/* RIGHT SIDE: Text and Features Container */}
+                    <div className="flex flex-col p-4 md:p-8 justify-center">
+                        
+                        {/* Tagline */}
+                        <p className='text-sm uppercase tracking-widest text-gray-600 font-bold mb-3'>
+                            Easy, Secure, and Reliable
+                        </p>
+                        
+                        {/* Main Headline */}
+                        <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                            Why <br />Golden Swift?
+                        </h1>
+                        
+                        {/* Feature List */}
+                        <div className="space-y-6 mt-10">
+                            
+                            {/* Feature 1: Instant Transfer */}
+                            <div className='flex items-start space-x-4'>
+                                <Zap className="h-7 w-7 text-blue-500 flex-shrink-0 mt-1" />
+                                <div>
+                                    <h2 className="text-xl font-bold text-gray-900">Instant Transfer.</h2>
+                                    <p className="text-gray-600 mt-1">Send and receive money instantly, anytime, anywhere in the world.</p> 
+                                </div>
+                            </div>
+                            
+                            {/* Feature 2: Smart Savings */}
+                            <div className='flex items-start space-x-4'>
+                                <TrendingUp className="h-7 w-7 text-blue-500 flex-shrink-0 mt-1" />
+                                <div>
+                                    <h2 className="text-xl font-bold text-gray-900">Smart Savings.</h2>
+                                    <p className="text-gray-600 mt-1">Digitize your savings and reach your financial goals with smart tools.</p> 
+                                </div>
+                            </div>
+                            
+                            {/* Feature 3: Secure Banking */}
+                            <div className='flex items-start space-x-4'>
+                                <ShieldCheck className="h-7 w-7 text-blue-500 flex-shrink-0 mt-1" />
+                                <div>
+                                    <h2 className="text-xl font-bold text-gray-900">Secure Banking.</h2>
+                                    <p className="text-gray-600 mt-1">Your data and transactions are protected with top-tier security and encryption.</p> 
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        {/* CTA Button */}
+                        <button className='mt-12 w-full md:w-auto self-start bg-blue-600 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-[1.02] active:scale-95'>
+                            Get Started Today
+                        </button>
+                        
+                    </div>
+                </div>
+            </section>
+    )
+
+};
 
 const serviceItems = [
     { title: "Instant Transfers", 
@@ -482,6 +615,7 @@ const HomePage = ({onLoginClick, onSignUpClick}) => (
         <div className="flex-1 flex items-center justify-center">
             <CallToAction />
         </div>
+        <Offers />
         <Features />
         <Services />
         <Steps />
