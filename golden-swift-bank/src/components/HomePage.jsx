@@ -197,36 +197,40 @@ const offersOptions = [
 
 
 const Offers = () => {
+    const [sliderKey, setSliderKey] = useState(0); 
+
+    // 💡 NEW: Force remount after initial render (e.g., 50ms)
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setSliderKey(1); // Change the key after a delay
+        }, 50); 
+        return () => clearTimeout(timer); // Cleanup
+    }, []);
+
     var settings = {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 3,
+        
+        // 💡 FIX 1: Set the base (desktop/large screen) setting to 3.
+        slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
         autoplay: true,
         autoplaySpeed: 4000,
-        inintialSlide: 0,
-        focusOnSelect: true,
-        useCSS: true,
+        className: "center",
+        mobileFirst: true,
+        centerPadding: "60px",
+        
         responsive: [
             {
-                breakpoint: 1024,
+                // Breakpoint for screens LESS than 1024px (e.g., Tablets)
+                breakpoint: 1024, 
                 settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-                infinite: true,
-                dots: true
+                    slidesToShow: 3, // Adjusting for a more typical tablet view
+                    slidesToScroll: 1,
                 }
             },
-            {
-                breakpoint: 768,
-                settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                initialSlide: 2
-                }
-            }
         ]
     };
     return (
@@ -235,20 +239,23 @@ const Offers = () => {
                 One wallet, everything connected
             </h1>
             
-                <div className="w-3/4 mx-auto items-center justify-center py-6 px-4 bg-amber-100/50 rounded-2xl shadow-lg">
-                    <Slider {...settings}>
-                        {offersOptions.map((offer, index) => {
-                            return (
-                                <div key={index} className="bg-white backdrop-blur-md h-[200px] rounded-xl p-6 shadow-lg hover:shadow-2xl transition duration-300 flex flex-col items-center justify-center">
-                                    <div className="flex gap-1 md:text-center ">
-                                        <h1 className='w-14 h-14 text-gray-800 font-bold'>{offer.icon}</h1>
-                                        <h2 className="md:text-2xl text-lg font-bold text-bold mb-2">{offer.title}</h2>
+                <div className="w-full max-w-5xl mx-auto items-center justify-center py-6 px-4 bg-white rounded-2xl shadow-lg">
+                    <div className="overflow-hidden w-full">
+                        <Slider key={sliderKey} {...settings}>
+                            {offersOptions.map((offer, index) => {
+                                return (
+                                    <div key={index}>
+                                        <div className="flex gap-1 md:text-center">
+                                            <h1 className='w-14 h-14 text-gray-800 font-bold'>{offer.icon}</h1>
+                                            <h2 className="md:text-2xl text-lg font-bold text-bold mb-2">{offer.title}</h2>
+                                        </div>
+                                        <p className="text-gray-800 text-sm md:text-xl text-center py-3 px-4 justify-center items-center">{offer.description}</p>
                                     </div>
-                                    <p className="text-gray-800 text-sm md:text-xl text-center py-3 px-4 justify-center items-center">{offer.description}</p>
-                                </div>
-                            );
-                        })}
-                    </Slider>
+                                );
+                            })}
+                        </Slider>
+                    </div>
+                    
                     
                 </div>
         </div>
