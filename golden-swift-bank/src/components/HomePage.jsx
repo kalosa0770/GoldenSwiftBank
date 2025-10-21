@@ -7,6 +7,8 @@ import { Menu, X, ArrowRight, ArrowLeft, Zap, ShieldCheck, TrendingUp, MapPin, R
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import CountUp from 'react-countup';
+import { useInView } from 'react-intersection-observer';
 
 // Header Section
 const Header = ({onLoginClick, onSignUpClick}) => {
@@ -115,7 +117,7 @@ const CallToAction = () => {
                     </h1>
                     
                     {/* Changed font-bold to font-medium for subtext readability */}
-                    <p className="text-xs md:text-lg font-medium text-gray-600 drop-shadow-sm mb-8 max-w-xl tracking-tight leading-normal">
+                    <p className="text-sm md:text-lg font-medium text-gray-600 drop-shadow-sm mb-8 max-w-xl tracking-tight leading-normal">
                         <CurvedUnderline ><span className="text-dark-900">Golden Swift</span></CurvedUnderline>connects overseas communities, local citizens, institutions through one secure wallet. We
                         offer lower fees, instant settlements and seamless integrations for schools, merchants and government.
                     </p>
@@ -172,18 +174,22 @@ const CallToAction = () => {
 
 const offersOptions = [
     {
+        icon: <ReceiptText />,
         title: "Real-time FX",
         description: "In-app conversations with live exchange rates and low fees."
     },
     {
-        title: "Merchants & Bills Payments",
+        icon: <ReceiptText />,
+        title: "Pay Bills",
         description: "Pay for goods, services, utilities and school fees seamlessly."
     },
     {
+        icon: <MapPin />,
         title: "AgentNet",
         description: "Agent dashboard, float and commission tracking"
     },
     {
+        icon: <ShieldCheck />,
         title: "Security",
         description: "Top-tier security and encryption to protect your data and transactions."
     },
@@ -195,51 +201,50 @@ const Offers = () => {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToScroll: 2,
+        slidesToShow: 3,
         slidesToScroll: 1,
         arrows: false,
         autoplay: true,
         autoplaySpeed: 4000,
+        inintialSlide: 0,
+        focusOnSelect: true,
+        useCSS: true,
         responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          infinite: true,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 1
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+            {
+                breakpoint: 1024,
+                settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                infinite: true,
+                dots: true
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                initialSlide: 2
+                }
+            }
+        ]
     };
     return (
-        <div className="flex flex-col items-center justify-center py-10 px-6 sm:px-12 bg-blue-700 gap-6 rounded-t-3xl shadow-2xl shadow-blue-900/50">
+        <div className="flex flex-col items-center justify-center py-10 px-6 sm:px-12 bg-amber-500 gap-6 rounded-t-3xl shadow-2xl shadow-blue-900/50">
             <h1 className='text-3xl lg:text-5xl text-white text-center font-extrabold tracking-tight mb-4'>
                 One wallet, everything connected
             </h1>
             
-                <div className="w-3/4 mx-auto">
+                <div className="w-3/4 mx-auto items-center justify-center py-6 px-4 bg-amber-100/50 rounded-2xl shadow-lg">
                     <Slider {...settings}>
                         {offersOptions.map((offer, index) => {
                             return (
-                                <div key={index} className="bg-white bg-opacity-20 backdrop-blur-md h-[250px] rounded-xl p-6 mb-6 shadow-lg hover:shadow-2xl transition duration-300">
-                                    <h2 className="text-2xl font-bold text-white mb-2">{offer.title}</h2>
-                                    <p className="text-white text-opacity-90">{offer.description}</p>
+                                <div key={index} className="bg-white backdrop-blur-md h-[200px] rounded-xl p-6 shadow-lg hover:shadow-2xl transition duration-300 flex flex-col items-center justify-center">
+                                    <div className="flex gap-1 md:text-center ">
+                                        <h1 className='w-14 h-14 text-gray-800 font-bold'>{offer.icon}</h1>
+                                        <h2 className="md:text-2xl text-lg font-bold text-bold mb-2">{offer.title}</h2>
+                                    </div>
+                                    <p className="text-gray-800 text-sm md:text-xl text-center py-3 px-4 justify-center items-center">{offer.description}</p>
                                 </div>
                             );
                         })}
@@ -370,7 +375,7 @@ const Services = () => {
     const transitionClass = direction === 'forward' ? 'slide' : 'slide-back';
     
     return (
-        <div  className="grid grid-cols-1 md:grid-cols-2 bg-gray-200 py-20 px-4 md:px-8 items-center justify-center w-full max-w-7xl mx-auto">
+        <div  className="grid grid-cols-1 md:grid-cols-2  py-20 px-4 md:px-8 items-center justify-center w-full max-w-7xl mx-auto">
             
             {/* LEFT SIDE: Headline & Controls */}
             <div className="flex flex-col p-4 md:p-8">
@@ -446,6 +451,56 @@ const Services = () => {
     );
 }
 
+
+const Goal = () => {
+    const { ref, inView } = useInView({
+        triggerOnce: false, 
+        threshold: 0.5, 
+    });
+
+
+    return (
+        <section className="py-20 bg-gray-100 flex items-center justify-center flex-col gap-4">
+            
+            <div ref={ref} className="w-full">
+                
+                <div className="max-w-4xl mx-auto px-4 text-center">
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
+                        Our Goal
+                    </h2>
+                    <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
+                        At Golden Swift, we empower individuals and communities worldwide by providing a secure, efficient, and user-friendly digital wallet solution. 
+                        We strive to bridge the gap between traditional financial systems and modern technology, 
+                        enabling seamless money transfers, smart savings, and easy access to essential financial services. 
+                    </p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5 max-w-3xl w-full mx-auto items-center justify-center text-center px-4">
+                    <div className="flex flex-col ">
+                        <h1 className='text-gray-800 font-bold md:text-2xl text-3xl'>Users</h1>
+                        <p className={`${inView ? 'text-gray-700 md:text-lg text-sm font-extrabold' : ''}`}>
+                            {inView && <CountUp start={0} end={1000000} duration={5} ></CountUp>}+
+                        </p>
+                    </div>
+                    
+                    <div className="flex flex-col">
+                        <h1 className='text-gray-800 font-bold md:text-2xl text-3xl'>Agents</h1>
+                        <p className={`${inView ? 'text-gray-700 md:text-lg text-sm font-extrabold' : ''}`}>
+                            {inView && <CountUp start={0} end={5000} duration={3}></CountUp>}+
+                        </p>
+                    </div>
+                    <div className="flex flex-col">
+                        <h1 className='text-gray-800 font-bold md:text-2xl text-3xl'>Cost Reduction</h1>
+                        <p className={`${inView ? 'text-gray-700 md:text-lg text-sm font-extrabold' : ''}`}>
+                            {inView && <CountUp start={0} end={40} duration={2}></CountUp>}%
+                        </p>
+                    </div>
+                </div>
+                
+            </div> 
+        </section>
+    );
+}
 
     
 
@@ -533,76 +588,63 @@ const Steps = () => {
 
 const Footer = () => {
     return (
-        <footer className="bg-gray-800 text-white pt-16 pb-10">
+        <footer className="bg-gray-50 text-white pt-16 pb-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="pb-8 flex">
+                    {/* Social Media Icons */}
+                    <div className="flex space-x-6 order-1 md:order-2 font-bold">
+                        <a href="https://twitter.com" aria-label="Twitter" className="text-gray-800 hover:text-blue-400 transition">
+                            <Twitter />
+                        </a>
+                        <a href="https://linkedin.com" aria-label="LinkedIn" className="text-gray-800 hover:text-blue-400 transition">
+                            <Linkedin />
+                        </a>
+                        <a href="https://facebook.com" aria-label="Facebook" className="text-gray-800 hover:text-blue-400 transition">
+                            <Facebook />
+                        </a>
+                    </div>
+                </div>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
 
                     {/* Column 1: Logo and Contact */}
                     <div className="col-span-2 md:col-span-2 space-y-4">
-                        <h3 className="text-3xl font-extrabold text-white">Golden Swift</h3>
-                        <p className="text-gray-400 text-sm">
-                            Africa’s All-in-One Wallet for People
+                        <h3 className="text-3xl font-extrabold text-gray-800">Golden Swift</h3>
+                        <p className="text-gray-700 text-sm">
+                            One Wallet. Everything Connected.
                         </p>
                         <div className="pt-2">
-                            <p className="text-sm font-semibold text-amber-500">Support:</p>
-                            <p className="text-gray-300 text-sm">support@goldenswift.com</p>
-                            <p className="text-gray-300 text-sm">+260770940809</p>
+                            <p className="text-sm font-semibold text-gray-700">Support:</p>
+                            <p className="text-gray-700 text-sm">info@goldenswift.com</p>
                         </div>
                     </div>
 
                     {/* Column 2: Company Links */}
                     <div className="col-span-1 space-y-3">
-                        <h4 className="text-lg font-bold text-gray-100 mb-2">Company</h4>
+                        <h4 className="text-lg font-bold text-gray-800 mb-2">Company</h4>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="/about" className="text-gray-400 hover:text-blue-400 transition">About Us</a></li>
-                            <li><a href="/press" className="text-gray-400 hover:text-blue-400 transition">Press & Media</a></li>
-                        </ul>
-                    </div>
-
-                    {/* Column 3: Services & Features */}
-                    <div className="col-span-1 space-y-3">
-                        <h4 className="text-lg font-bold text-gray-100 mb-2">Services</h4>
-                        <ul className="space-y-2 text-sm">
-                            <li><a href="/send" className="text-gray-400 hover:text-blue-400 transition">Transfer</a></li>
-                            <li><a href="/savings" className="text-gray-400 hover:text-blue-400 transition">Smart Savings</a></li>
-                            <li><a href="/pay-bills" className="text-gray-400 hover:text-blue-400 transition">Bill Payments</a></li>
-                            <li><a href="/cash-network" className="text-gray-400 hover:text-blue-400 transition">Cash Network</a></li>
+                            <li><a href="/about" className="text-gray-700 hover:text-blue-400 transition">About Us</a></li>
+                            <li><a href="/press" className="text-gray-700 hover:text-blue-400 transition">Our Team</a></li>
                         </ul>
                     </div>
 
                     {/* Column 4: Legal & Help */}
                     <div className="col-span-1 space-y-3">
-                        <h4 className="text-lg font-bold text-gray-100 mb-2">Support</h4>
+                        <h4 className="text-lg font-bold text-gray-800 mb-2">Support</h4>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="/faq" className="text-gray-400 hover:text-blue-400 transition">FAQ</a></li>
-                            <li><a href="/security" className="text-gray-400 hover:text-blue-400 transition">Security</a></li>
-                            <li><a href="/privacy" className="text-gray-400 hover:text-blue-400 transition">Privacy Policy</a></li>
-                            <li><a href="/terms" className="text-gray-400 hover:text-blue-400 transition">Terms of Service</a></li>
+                            <li><a href="/faq" className="text-gray-700 hover:text-blue-400 transition">FAQ</a></li>
+                            <li><a href="/security" className="text-gray-700 hover:text-blue-400 transition">Security</a></li>
+                            <li><a href="/privacy" className="text-gray-700 hover:text-blue-400 transition">Privacy Policy</a></li>
+                            <li><a href="/terms" className="text-gray-700 hover:text-blue-400 transition">Terms of Service</a></li>
                         </ul>
                     </div>
                 </div>
 
-                {/* --- Separator and Bottom Bar --- */}
-                <div className="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row items-center justify-between">
-                    
-                    {/* Copyright */}
-                    <p className="text-sm text-gray-500 order-2 md:order-1 mt-4 md:mt-0">
-                        &copy; {new Date().getFullYear()} Golden Swift. All rights reserved.
-                    </p>
-
-                    {/* Social Media Icons */}
-                    <div className="flex space-x-6 order-1 md:order-2">
-                        <a href="https://twitter.com" aria-label="Twitter" className="text-gray-400 hover:text-blue-400 transition">
-                            <Twitter />
-                        </a>
-                        <a href="https://linkedin.com" aria-label="LinkedIn" className="text-gray-400 hover:text-blue-400 transition">
-                            <Linkedin />
-                        </a>
-                        <a href="https://facebook.com" aria-label="Facebook" className="text-gray-400 hover:text-blue-400 transition">
-                            <Facebook />
-                        </a>
+                {/* Copyright */}
+                    <div className="flex mt-6">
+                        <p className="text-sm text-gray-500 order-2 md:order-1 mt-4 md:mt-0 text-center w-full">
+                            &copy; {new Date().getFullYear()} Golden Swift. All rights reserved.
+                        </p>
                     </div>
-                </div>
             </div>
         </footer>
     );
@@ -618,6 +660,7 @@ const HomePage = ({onLoginClick, onSignUpClick}) => (
         <Offers />
         <Features />
         <Services />
+        <Goal />
         <Steps />
         <Footer />
     </div>
