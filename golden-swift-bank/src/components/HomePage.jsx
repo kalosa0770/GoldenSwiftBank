@@ -211,24 +211,23 @@ const Offers = () => {
         dots: true,
         infinite: true,
         speed: 500,
-        
-        // 💡 FIX 1: Set the base (desktop/large screen) setting to 3.
-        slidesToShow: 1,
+        slidesToShow: 1, 
         slidesToScroll: 1,
+        
         arrows: false,
         autoplay: true,
         autoplaySpeed: 4000,
-        className: "center",
-        mobileFirst: true,
-        centerPadding: "60px",
+        centerMode: true,
+        centerPadding: '20px', 
         
         responsive: [
             {
-                // Breakpoint for screens LESS than 1024px (e.g., Tablets)
-                breakpoint: 1024, 
+                breakpoint: 1024,
                 settings: {
-                    slidesToShow: 3, // Adjusting for a more typical tablet view
+                    slidesToShow: 3,
                     slidesToScroll: 1,
+                    centerMode: false,
+                    centerPadding: '0px',
                 }
             },
         ]
@@ -239,12 +238,11 @@ const Offers = () => {
                 One wallet, everything connected
             </h1>
             
-                <div className="w-full max-w-5xl mx-auto items-center justify-center py-6 px-4 bg-white rounded-2xl shadow-lg">
-                    <div className="overflow-hidden w-full">
-                        <Slider key={sliderKey} {...settings}>
+            <div className="w-full mx-auto">
+                <Slider key={sliderKey} {...settings}>
                             {offersOptions.map((offer, index) => {
                                 return (
-                                    <div key={index}>
+                                    <div key={index } className="bg-white rounded-3xl shadow-xl p-6 md:p-10 m-4 flex flex-col items-center justify-center min-h-[250px]">
                                         <div className="flex gap-1 md:text-center">
                                             <h1 className='w-14 h-14 text-gray-800 font-bold'>{offer.icon}</h1>
                                             <h2 className="md:text-2xl text-lg font-bold text-bold mb-2">{offer.title}</h2>
@@ -254,10 +252,7 @@ const Offers = () => {
                                 );
                             })}
                         </Slider>
-                    </div>
-                    
-                    
-                </div>
+            </div>
         </div>
     )
 }
