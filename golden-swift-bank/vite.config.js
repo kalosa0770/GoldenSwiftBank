@@ -8,14 +8,15 @@ export default defineConfig({
   build: {
     outDir: 'dist'
   },
-  // 💡 UNCOMMENT AND USE THIS FOR LOCAL DEVELOPMENT 💡
+ 
   server: {
     proxy: {
-      // Directs any call starting with /api (e.g., /api/auth) to your local backend
       '/api': {
-        target: 'http://localhost:3001', 
+        target: 'http://localhost:3001', // Change to your local backend port
         changeOrigin: true,
-      }
-    }
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
   }
+
 });

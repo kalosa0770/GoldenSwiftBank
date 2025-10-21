@@ -1,9 +1,13 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 
+const VITE_BASE_URL = import.meta.env.VITE_APP_API_URL;
+
+
+const API_BASE_URL = VITE_BASE_URL || 'http://localhost:3001';
 
 const LoginForm = ({onLoginSuccess}) => {
   const location = useLocation();

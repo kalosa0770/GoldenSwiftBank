@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,6 +11,11 @@ const passwordRules = [
   { text: "At least one number", regex: /(?=.*\d)/ },
   { text: "At least one special character", regex: /(?=.*[!@#$%^&*])/ },
 ];
+
+const VITE_BASE_URL = import.meta.env.VITE_APP_API_URL;
+
+
+const API_BASE_URL = VITE_BASE_URL || 'http://localhost:3001';
 
 const SignUp = () => {
   const [data, setData] = useState({
