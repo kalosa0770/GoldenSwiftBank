@@ -17,47 +17,6 @@ const checkAuthStatus = () => !!localStorage.getItem("userName");
 const API_BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:3001';
 
 function App() {
-  const [deferredPrompt, setDeferredPrompt] = useState(null); 
-
-    // 💡 EFFECT: Listen for the prompt being set by the script in index.html
-    useEffect(() => {
-        // We use a timeout because the deferredPrompt might not be set instantly
-        const checkPrompt = () => {
-            const prompt = window.deferredPrompt;
-            if (prompt) {
-                setDeferredPrompt(prompt);
-                // We clear the global variable so it doesn't leak or confuse future checks
-                window.deferredPrompt = null; 
-            }
-        };
-
-        // Check initially and then set a small interval for robustness
-        checkPrompt();
-        const interval = setInterval(checkPrompt, 500); 
-        
-        return () => clearInterval(interval);
-    }, []);
-
-
-    const handleInstallClick = async () => {
-        if (!deferredPrompt) {
-            console.log("Install prompt is not ready.");
-            // If the prompt is null, maybe tell the user to use the browser's menu
-            alert("Please use your browser's menu option (usually three dots) to 'Install App' or 'Add to Home Screen'.");
-            return;
-        }
-
-        // 1. Show the installation prompt
-        deferredPrompt.prompt();
-
-        // 2. Wait for the user to respond to the prompt
-        const { outcome } = await deferredPrompt.userChoice;
-
-        console.log(`User response to the install prompt: ${outcome}`);
-
-        // 3. Reset the prompt state regardless of the outcome
-        setDeferredPrompt(null);
-    };
   // 💡 FIX 1: Set initial state to null to represent 'checking session'
   const [isAuthenticated, setIsAuthenticated] = useState(null); 
   const navigate = useNavigate();
@@ -124,7 +83,7 @@ function App() {
   return (
     <div className="font-sans min-h-screen">
       <Routes>
-        <Route path="/" element={<HomePage handleInstallClick={handleInstallClick}/>} />
+        <Route path="/" element={<HomePage />} />
 
         {/* Signup Route */}
         <Route

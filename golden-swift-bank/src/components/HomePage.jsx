@@ -13,45 +13,39 @@ import { useInView } from 'react-intersection-observer';
 // Header Section
 const Header = ({onLoginClick, onSignUpClick}) => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [deferredPrompt, setDeferredPrompt] = useState(null); 
+    const [deferredPrompt, setDeferredPrompt] = useState(window.deferredPrompt); 
 
-    // 💡 EFFECT: Listen for the prompt being set by the script in index.html
+    // 💡 EFFECT: Listen for the custom global event 'pwa-ready'
     useEffect(() => {
-        // We use a timeout because the deferredPrompt might not be set instantly
-        const checkPrompt = () => {
-            const prompt = window.deferredPrompt;
-            if (prompt) {
-                setDeferredPrompt(prompt);
-                // We clear the global variable so it doesn't leak or confuse future checks
-                window.deferredPrompt = null; 
-            }
+        const handlePWAReady = () => {
+            // Update state when the global deferredPrompt is available
+            setDeferredPrompt(window.deferredPrompt);
         };
 
-        // Check initially and then set a small interval for robustness
-        checkPrompt();
-        const interval = setInterval(checkPrompt, 500); 
+        // Attach listener to the custom event defined in index.html
+        window.addEventListener('pwa-ready', handlePWAReady);
         
-        return () => clearInterval(interval);
+        // Cleanup listener
+        return () => window.removeEventListener('pwa-ready', handlePWAReady);
     }, []);
 
 
     const handleInstallClick = async () => {
         if (!deferredPrompt) {
-            console.log("Install prompt is not ready.");
-            // If the prompt is null, maybe tell the user to use the browser's menu
+            // Fallback instruction if the button is somehow clicked when prompt isn't ready
             alert("Please use your browser's menu option (usually three dots) to 'Install App' or 'Add to Home Screen'.");
             return;
         }
 
-        // 1. Show the installation prompt
+        // Show the installation prompt
         deferredPrompt.prompt();
 
-        // 2. Wait for the user to respond to the prompt
+        // Wait for the user to respond and then reset state
         const { outcome } = await deferredPrompt.userChoice;
 
         console.log(`User response to the install prompt: ${outcome}`);
 
-        // 3. Reset the prompt state regardless of the outcome
+        // Reset the deferredPrompt state which disables the button after use
         setDeferredPrompt(null);
     };
 
