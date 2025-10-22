@@ -1,65 +1,105 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { Routes, Route, Navigate, useLocation, useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import HomePage from "./components/HomePage";
 import LoginForm from "./components/LoginForm";
 import SignUp from "./components/SignUp";
 import UserDashboard from "./user-components/UserDashboard";
 
-const checkAuthStatus = () => !!localStorage.getItem("authToken");
+// 💡 Global Axios Configuration (Crucial for Cookie Auth)
+// Ensure this is done once in your main app entry point (e.g., index.jsx or here)
+axios.defaults.withCredentials = true;
+
+// 🎯 We no longer rely on localStorage for the *token*. 
+// We use a safe local variable for the username (for UI only).
+const checkAuthStatus = () => !!localStorage.getItem("userName");
+
+const API_BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:3001';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(checkAuthStatus);
+  // 💡 FIX 1: Set initial state to null to represent 'checking session'
+  const [isAuthenticated, setIsAuthenticated] = useState(null); 
   const navigate = useNavigate();
 
-  // Use useCallback to define the function that updates the state and navigates
-  const handleLoginSuccess = useCallback(() => {
-    // 1. Update state immediately to trigger re-render
+  // --- Session Management Handlers ---
+
+  const handleLoginSuccess = useCallback((userName) => {
+    // The cookie is set by the backend. We only save the UI name and update state.
+    if (userName) {
+        localStorage.setItem("userName", userName);
+    }
     setIsAuthenticated(true);
-    // 2. Navigate to the protected route
+    // Navigate after setting state
     navigate('/dashboard', { replace: true });
   }, [navigate]);
 
-  // Set up an effect to listen for changes in localStorage for manual changes (optional, but robust)
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setIsAuthenticated(checkAuthStatus());
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
-
-  const handleLogout = useCallback(() => {
-    // 1. Clear local storage data
-    localStorage.removeItem("authToken");
+  const handleLogout = useCallback(async () => {
+    try {
+        // 💡 Call backend to explicitly clear the secure HTTP-only cookie
+        await axios.post(`${API_BASE_URL}/api/auth/logout`);
+    } catch (error) {
+        console.error("Logout failed to clear server cookie:", error);
+    }
+    
+    // Clear local non-sensitive data
     localStorage.removeItem("userName"); 
     
-    // 2. Update state to false, forcing App to re-render immediately
+    // Update state and navigate
     setIsAuthenticated(false); 
-    
-    // 3. Navigate to login (the redirect logic in the routes handles the rest)
     navigate('/login', { replace: true, state: { message: "You have been logged out.", type: 'success' } });
   }, [navigate]);
 
+  // --- Authentication Check (Replaces synchronous checkAuthStatus) ---
+
+  // 💡 FIX 2: Check the secure cookie status on initial app load using the backend.
+  useEffect(() => {
+    const verifyInitialSession = async () => {
+      try {
+        // Hitting the protected endpoint will succeed only if the browser sends a valid cookie.
+        await axios.get(`${API_BASE_URL}/api/auth/verify-session`);
+        setIsAuthenticated(true); // Cookie is valid!
+      } catch (error) {
+        // If request fails (401 unauthorized or network error), the cookie is invalid/expired.
+        setIsAuthenticated(false); 
+        localStorage.removeItem("userName"); // Clear stale UI name
+      }
+    };
+    
+    // Run session check once on component mount
+    verifyInitialSession();
+  }, []);
+
+  // --- Render Logic ---
   
+  // 💡 FIX 3: Show loading state while isAuthenticated is null
+  if (isAuthenticated === null) {
+    return (
+        <div className="flex justify-center items-center min-h-screen">
+            <p className="text-xl text-gray-700">Checking session...</p>
+        </div>
+    ); 
+  }
+
   return (
     <div className="font-sans min-h-screen">
       <Routes>
         <Route path="/" element={<HomePage />} />
 
-        {/* Signup Route: If authenticated, redirect to Dashboard */}
+        {/* Signup Route */}
         <Route
           path="/signup"
-          element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <SignUp />}
+          // Pass the success handler to SignUp to maintain flow
+          element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <SignUp onLoginSuccess={handleLoginSuccess} />}
         />
 
-        {/* Login Route: If authenticated, redirect to Dashboard */}
+        {/* Login Route */}
         <Route
           path="/login"
           // Pass the corrected handler function
           element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginForm onLoginSuccess={handleLoginSuccess}/>}
         />
 
-        {/* Protected Dashboard: If NOT authenticated, redirect to Login */}
+        {/* Protected Dashboard */}
         <Route
           path="/dashboard"
           element={
@@ -67,7 +107,7 @@ function App() {
           }
         />
 
-        {/* Catch-all: redirect unknown paths to home */}
+        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>

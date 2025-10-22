@@ -59,43 +59,64 @@ const SignUp = () => {
 
 
   const handleSignUp = async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    if (!passwordValidations.every(rule => rule.valid)) {
-      setError("Password does not meet all complexity requirements.");
-      return;
-    }
+        if (!passwordValidations.every(rule => rule.valid)) {
+            setError("Password does not meet all complexity requirements.");
+            return;
+        }
 
-    setError("");
-    setIsLoading(true);
+        setError("");
+        setIsLoading(true);
 
-    try {
-      const url = `${API_BASE_URL}/api/users`;
-      
-      const response = await axios.post(url, data);
-      
-      // FIX: Instead of handling the token here (which can lead to issues), 
-      // we redirect the user to the login page with a success message.
-      if (response.status === 201 || response.data?.token) {
-        // Redirect to login on success
-        navigate('/login', { 
-          replace: true, 
-          state: { 
-            message: "Signup successful! Please log in with your new credentials.",
-            type: 'success'
-          }
-        });
-      } else {
-        setError("Signup failed. Please try again.");
-      }
-      
-    } catch (err) {
-      setError(err.response?.data?.message || "Signup failed. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        try {
+            const url = `${API_BASE_URL}/api/users`;
+            
+            // 💡 FIX 1: Send the request to the backend. The browser receives and sets the cookie automatically.
+            const response = await axios.post(url, data);
+            
+            // We DO NOT check for response.data.token here because the token is in the HTTP-only cookie.
+            
+            // 💡 FIX 2: Check for successful HTTP status code only (201 is Created)
+            if (response.status === 201) {
+                
+                // 💡 FIX 3: If the server returns a user object (which it does in your backend code),
+                // we can optionally save the userName for the UI, but NO TOKEN is saved.
+                const userName = response.data.user?.firstName;
+                if (userName) {
+                    localStorage.setItem('userName', userName);
+                }
+                
+                // 💡 FIX 4: The user is technically authenticated via the cookie. 
+                // We should navigate to the dashboard directly, relying on the App component's 
+                // auth check (which should check for the presence of the cookie via a backend call).
+                // If direct dashboard redirect causes problems, redirecting to login is safer.
+                
+                // OPTION A: Navigate directly to dashboard (More seamless UX if subsequent requests work)
+                // navigate('/dashboard', { replace: true });
+                
+                // OPTION B: Navigate to login (Safer flow, matches your original intent)
+                 navigate('/login', { 
+                   replace: true, 
+                   state: { 
+                     message: "Signup successful! Please log in with your new credentials.",
+                     type: 'success'
+                   }
+                 });
 
+
+            } else {
+                // Should only hit this with codes like 200 (OK) if logic is weird.
+                setError("Signup failed. Server returned an unusual response.");
+            }
+            
+        } catch (err) {
+            // Check for 409 (Email exists) or a network/server failure
+            setError(err.response?.data?.message || "Signup failed. Please check network/credentials.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
   const isFormValid = passwordValidations.every(rule => rule.valid) &&
                       data.firstName && data.lastName && data.email && data.password;
 
