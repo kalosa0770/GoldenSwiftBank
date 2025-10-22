@@ -13,6 +13,47 @@ import { useInView } from 'react-intersection-observer';
 // Header Section
 const Header = ({onLoginClick, onSignUpClick}) => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [deferredPrompt, setDeferredPrompt] = useState(null); 
+
+    // 💡 EFFECT: Listen for the prompt being set by the script in index.html
+    useEffect(() => {
+        // We use a timeout because the deferredPrompt might not be set instantly
+        const checkPrompt = () => {
+            const prompt = window.deferredPrompt;
+            if (prompt) {
+                setDeferredPrompt(prompt);
+                // We clear the global variable so it doesn't leak or confuse future checks
+                window.deferredPrompt = null; 
+            }
+        };
+
+        // Check initially and then set a small interval for robustness
+        checkPrompt();
+        const interval = setInterval(checkPrompt, 500); 
+        
+        return () => clearInterval(interval);
+    }, []);
+
+
+    const handleInstallClick = async () => {
+        if (!deferredPrompt) {
+            console.log("Install prompt is not ready.");
+            // If the prompt is null, maybe tell the user to use the browser's menu
+            alert("Please use your browser's menu option (usually three dots) to 'Install App' or 'Add to Home Screen'.");
+            return;
+        }
+
+        // 1. Show the installation prompt
+        deferredPrompt.prompt();
+
+        // 2. Wait for the user to respond to the prompt
+        const { outcome } = await deferredPrompt.userChoice;
+
+        console.log(`User response to the install prompt: ${outcome}`);
+
+        // 3. Reset the prompt state regardless of the outcome
+        setDeferredPrompt(null);
+    };
 
     return (
         <header className="fixed top-0 z-20 w-full bg-gray-200 p-4 shadow-2xl">
@@ -32,10 +73,15 @@ const Header = ({onLoginClick, onSignUpClick}) => {
 
                 {/* Desktop Nav */}
                 <ul className="hidden md:flex items-center gap-6 list-none text-sm">
-                    <li className='bg-blue-700 hover:bg-blue-500 text-white font-bold rounded-lg py-3 px-2 text-sm transition duration-200'>
-                       <Link to="/login">
-                         <button  className='border-none text-white'>Download App</button>
-                       </Link> 
+                    <li className={`bg-blue-700 text-white font-bold rounded-lg py-3 px-2 text-sm transition duration-200 ${!deferredPrompt ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500'}`}>
+                        <button 
+                            onClick={handleInstallClick}
+                            className='border-none text-white'
+                            disabled={!deferredPrompt}
+                        >
+                            {/* Text can change based on availability, but "Download App" is fine */}
+                            {deferredPrompt ? 'Download App' : 'App Ready'}
+                        </button>
                     </li>
                     <li className='bg-none border-2 border-amber-500 hover:bg-blue-500 text-blue-700 font-bold rounded-lg py-3 px-2 text-sm transition duration-200'>
                        <Link to="/login">
@@ -90,9 +136,16 @@ const Header = ({onLoginClick, onSignUpClick}) => {
                             </Link> 
                             
                         </div>
-                        <button className='bg-blue-700 hover:bg-blue-500 text-white font-bold rounded-lg py-3 px-2 text-sm transition duration-200'>
-                            Download App
-                        </button>
+                        <li className={`bg-blue-700 text-white font-bold rounded-lg py-3 px-2 text-sm transition duration-200 ${!deferredPrompt ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500'}`}>
+                            <button 
+                                onClick={handleInstallClick}
+                                className='border-none text-white'
+                                disabled={!deferredPrompt}
+                            >
+                                {/* Text can change based on availability, but "Download App" is fine */}
+                                {deferredPrompt ? 'Download App' : 'App Ready'}
+                            </button>
+                        </li>
                     </div>
                 </div>
             )}

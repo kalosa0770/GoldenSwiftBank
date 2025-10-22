@@ -2,9 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="./src/assets/logo.jpeg" />
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    
+    <!-- PWA MANIFEST LINK -->
+    <link rel="manifest" href="/manifest.json" />
+    <!-- Theme color for the app bar on mobile -->
+    <meta name="theme-color" content="#2563EB" /> 
+
+    <!-- Favicon / App Icon (Must be placed in the public folder root) -->
+    <link rel="icon" href="/logo.jpeg" /> 
     
     <title>Golden Swift Bank</title>
   </head>
@@ -12,5 +18,34 @@
     <div id="root"></div>
     
     <script type="module" src="/src/index.jsx"></script> 
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+      // Script to register the Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+              console.log('SW registered:', registration);
+              
+              // Handle the install prompt (to trigger the "Download App" button)
+              let deferredPrompt;
+              window.addEventListener('beforeinstallprompt', (e) => {
+                  e.preventDefault();
+                  deferredPrompt = e;
+                  console.log("Install prompt ready.");
+                  
+                  // NOTE: You must now implement a button in your React code 
+                  // that calls deferredPrompt.prompt() to show the install dialog.
+                  window.deferredPrompt = deferredPrompt; // Attach to window for easy access in React
+              });
+
+            })
+            .catch(registrationError => {
+              console.log('SW registration failed:', registrationError);
+            });
+        });
+      }
+    </script>
   </body>
 </html>
