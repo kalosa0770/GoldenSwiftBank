@@ -94,12 +94,12 @@ const CheckBalance = () => {
     );
 }
 
-const Greeting = () => {
+const Greeting = ({userName}) => {
     return (
         <div className="flex flex-col gap-4">
             {/* Greeting: Use a soft gray for background text, and amber for the brand name */}
             <h1 className="text-gray-700 font-normal text-base">
-                Welcome back <span className="font-bold text-amber-500">Golden Swift</span>
+                Welcome back <span className="font-bold text-amber-500">{userName}</span>
             </h1>
             <CheckBalance />
         </div>

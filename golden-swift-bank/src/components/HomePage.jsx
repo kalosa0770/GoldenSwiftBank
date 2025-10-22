@@ -43,9 +43,9 @@ const Header = ({onLoginClick, onSignUpClick}) => {
                        </Link> 
                     </li>
                     <li className='border-none transparent text-gray-900'>
-                    
-                            <button><Menu /></button>
-                       
+                          <Link to="/signup">
+                                <button className='bg-amber-500 hover:bg-amber-400 text-white rounded-lg py-3 px-5 text-sm font-bold transition duration-200 shadow-lg'>Sign up</button>
+                            </Link>
                     </li>
                 </ul>
 
@@ -55,28 +55,45 @@ const Header = ({onLoginClick, onSignUpClick}) => {
                     onClick={() => setMenuOpen(!menuOpen)}
                     aria-label="Toggle menu"
                 >
-                    {menuOpen ? <X className="w-8 h-8 text-amber-600" /> : <Menu className="w-8 h-8 text-amber-600" />}
+                    {menuOpen ? <X className="w-8 h-8 text-gray-600" /> : <Menu className="w-8 h-8 text-gray-600" />}
                 </button>
             </nav>
 
             {/* Mobile Dropdown Menu */}
             {menuOpen && (
                 <div className="md:hidden absolute top-full left-0 w-full bg-gray-200 shadow-lg z-30">
-                    <ul className="flex flex-col items-center gap-4 py-6 text-sm">
-                        <li><a href="#" className='no-underline text-gray-700 hover:text-amber-500 font-semibold'>Home</a></li>
-                        <li><a href="#" className='no-underline text-gray-700 hover:text-amber-500 font-semibold'>About</a></li>
-                        <li><a href="#" className='no-underline text-gray-700 hover:text-amber-500 font-semibold'>Services</a></li>
-                        <li className='bg-blue-600 hover:bg-blue-500 text-white rounded-full py-2 px-5 text-sm font-semibold transition duration-200'>
+                    <div className="flex flex-col items-start justify-center gap-6 py-6 px-4 border-b border-gray-300">
+                        <div className="flex justify-between items-center">
+                            <button className='no-underline text-gray-700 hover:text-amber-500 font-semibold'>About Golden Swift</button>
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <button className='no-underline text-gray-700 hover:text-amber-500 font-semibold'>Our Services</button>
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <button className='no-underline text-gray-700 hover:text-amber-500 font-semibold'>Our Team</button>
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                        </div>
+                    </div>
+                    <div className="flex flex-col items-center gap-4 py-6 text-sm">
+                        <div className="flex gap-2 mb-4">
                             <Link to="/login">
-                                <button  className='border-none text-white'>Sign in</button>
-                            </Link> 
-                        </li>
-                        <li className='bg-amber-500 hover:bg-amber-400 text-white rounded-full py-2 px-5 text-sm font-bold transition duration-200 shadow-lg'>
+                            <button className='bg-blue-600 hover:bg-blue-500 text-white rounded-full py-2 px-5 text-sm font-semibold transition duration-200'>
+                                Sign in 
+                            </button>
+                            </Link>
                             <Link to="/signup">
-                                    <button className='border-none text-white'>Sign up</button>
+                                <button className='bg-amber-500 hover:bg-amber-400 text-white rounded-full py-2 px-5 text-sm font-bold transition duration-200 shadow-lg'>
+                                    Sign up
+                                </button>
                             </Link> 
-                        </li>
-                    </ul>
+                            
+                        </div>
+                        <button className='bg-blue-700 hover:bg-blue-500 text-white font-bold rounded-lg py-3 px-2 text-sm transition duration-200'>
+                            Download App
+                        </button>
+                    </div>
                 </div>
             )}
         </header>

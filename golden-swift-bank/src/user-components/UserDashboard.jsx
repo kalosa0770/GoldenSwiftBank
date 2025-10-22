@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 // Import all required components (assuming they exist)
 import Header from './Header'; 
@@ -9,25 +10,19 @@ import VirtualCard from './VirtualCard';
 import FooterNav from './FooterNav';
 import Sidebar from './Sidebar'; 
 
-const UserDashboard = () => {
+const UserDashboard = ({onLogout}) => {
     const navigate = useNavigate();
 
-    // 💡 LOGOUT FUNCTION: Clears the token and redirects to /login
-    const handleLogout = () => {
-        // 1. Clear the authentication token - 🔑 FIX APPLIED HERE 🔑
-        localStorage.removeItem('authToken'); // Changed from 'token'
-        
-        // 2. Redirect the user to the login page
-        navigate('/login', { replace: true });
-    };
+    const userName = localStorage.getItem('userName') || 'User'; 
 
+   
     return (
         <div className="relative md:grid md:grid-cols-[250px_1fr] min-h-screen bg-gray-50 w-full"> 
             
             {/* Sidebar (Desktop/Tablet View) */}
             <div className="hidden md:block h-full border-r border-gray-200 shadow-lg">
                 {/* Ensure the Sidebar component uses the updated handleLogout prop */}
-                <Sidebar logout={handleLogout} /> 
+                <Sidebar onLogout={onLogout} /> 
             </div>
 
             {/* Main Content Column */}
@@ -39,7 +34,7 @@ const UserDashboard = () => {
                 {/* Main Content Scrollable Area */}
                 <main className='flex flex-col p-4 gap-8 flex-grow overflow-y-auto no-scrollbar'>
                     
-                    <Greeting />
+                    <Greeting userName={userName} />
                     <ActionButtons />
                     
                     {/* ... other components ... */}
@@ -52,7 +47,7 @@ const UserDashboard = () => {
                 </main>
                 
                 {/* Footer Navigation (typically fixed/mobile-only) */}
-                <FooterNav />
+                <FooterNav onLogout={onLogout} />
             </div>
         </div>
     );

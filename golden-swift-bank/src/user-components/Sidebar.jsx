@@ -1,7 +1,7 @@
 import React from "react";
-import { Home, DollarSign, Zap, User} from 'lucide-react';
+import { Home, DollarSign, Zap, User, LogOut} from 'lucide-react';
 
-const Sidebar = ({logout}) => {
+const Sidebar = ({onLogout}) => {
     const navItems = [
         { name: 'Home', icon: Home, current: true },
         { name: 'Transfer', icon: Zap, current: false },
@@ -37,17 +37,12 @@ const Sidebar = ({logout}) => {
             </nav>
 
             {/* Footer Profile Placeholder */}
-           {/* <div>
-                <p className="text-sm font-semibold">Golden Swift</p>
-                <div className="flex justify-end">
-                    <button
-                        onClick={logout}
-                        className="px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-lg shadow-md hover:bg-red-700 transition duration-150"
-                    >
-                        Sign Out
-                    </button>
-                </div>
-            </div> */}
+           <button 
+                onClick={onLogout} // Calls the prop function to handle global state change
+                className="px-8 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition shadow-lg flex items-center justify-center mx-auto"
+                >
+                <LogOut size={20} className="mr-2"/> Logout
+            </button>
         </aside>
     )
 }

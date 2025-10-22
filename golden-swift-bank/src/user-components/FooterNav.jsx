@@ -1,8 +1,8 @@
 import React from 'react';
-import { Home, Zap, DollarSign, User, Settings } from 'lucide-react'; 
+import { Home, Zap, DollarSign, User, Settings, LogOut } from 'lucide-react'; 
 
 
-const FooterNav = ({ active = 'Home' }) => {
+const FooterNav = ({ active = 'Home', onLogout }) => {
     
     // navigation items
     const navItems = [
@@ -10,6 +10,7 @@ const FooterNav = ({ active = 'Home' }) => {
         { name: 'Transfer', icon: Zap, link: '#transfer' }, 
         { name: 'Wallet', icon: DollarSign, link: '#wallet' },
         { name: 'Account', icon: User, link: '#account' },
+        { name: 'Logout', icon: LogOut, link: onLogout },
     ];
 
     return (
@@ -31,16 +32,16 @@ const FooterNav = ({ active = 'Home' }) => {
                         : 'text-gray-600';
 
                     return (
-                        <a 
+                        <button
                             key={item.name}
-                            href={item.link}
                             className="flex flex-col items-center p-2 rounded-lg transition duration-300 hover:bg-gray-100"
+                            onClick={item.name === 'Logout' ? item.link : null}
                         >
                             <item.icon size={24} className={iconColor} />
                             <span className={`text-xs mt-1 ${textColor}`}>
                                 {item.name}
                             </span>
-                        </a>
+                        </button>
                     );
                 })}
             </div>
