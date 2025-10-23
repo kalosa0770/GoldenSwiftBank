@@ -1,4 +1,7 @@
 // Use the client import for React 18
+console.log('API Base URL:', import.meta.env.VITE_APP_API_URL);
+
+
 import React from 'react';
 import { createRoot } from 'react-dom/client'; 
 import { BrowserRouter } from 'react-router-dom'
