@@ -70,11 +70,8 @@ const SignUp = () => {
         setIsLoading(true);
 
         try {
-            const url = `${API_BASE_URL}/api/users`;
-            
-            // 💡 FIX 1: Send the request to the backend. The browser receives and sets the cookie automatically.
-            const response = await axios.post(url, data, {
-              withCredentials: true,
+            const response = await axios.post(`${API_BASE_URL}/api/users`, data, {
+              withCredentials: true, // important for HTTP-only cookie
             });
             
             // We DO NOT check for response.data.token here because the token is in the HTTP-only cookie.
