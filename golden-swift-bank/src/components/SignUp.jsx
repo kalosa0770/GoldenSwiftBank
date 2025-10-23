@@ -138,7 +138,7 @@ const SignUp = () => {
                 />
               </div>
         <div className="w-full md:w-1/2 p-8 sm:p-10 flex flex-col justify-center">
-          <h1 className="text-2xl font-extrabold text-gray-800 mb-6 text-center">Create your account</h1>
+          <h1 className="text-2xl font-extrabold text-gray-800 mb-6 text-center">Join the journey</h1>
           <form onSubmit={handleSignUp} className="flex flex-col gap-5">
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
