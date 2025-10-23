@@ -23,10 +23,7 @@
     
     <!-- PWA Service Worker Registration & Global Listener (CRITICAL FOR REACT) -->
     <script>
-      // 💡 GLOBAL VARIABLES: These must be available in the window scope
-      // 1. deferredPrompt: Stores the installation event object
       window.deferredPrompt = null;
-      // 2. pwaInstallReady: Custom event to signal to the React component
       window.pwaInstallReady = new Event('pwa-ready');
 
       if ('serviceWorker' in navigator) {
@@ -36,18 +33,13 @@
             .catch(err => console.error('SW registration failed:', err));
         });
       }
-        // 💡 CRITICAL: Captures the 'beforeinstallprompt' event
-        window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent the browser's default prompt from appearing automatically
-            e.preventDefault();
-            // Store the event so the button click can trigger it later
-            window.deferredPrompt = e;
-            console.log("Install prompt ready.");
-            
-            // Dispatch custom event to signal the React Header component to enable the button
-            window.dispatchEvent(window.pwaInstallReady);
-        });
-      }
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        window.deferredPrompt = e;
+        console.log("Install prompt ready.");
+        window.dispatchEvent(window.pwaInstallReady);
+      });
     </script>
   </body>
 </html>

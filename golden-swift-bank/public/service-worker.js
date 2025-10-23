@@ -1,18 +1,25 @@
 const CACHE_NAME = 'golden-swift-bank-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/favicon.ico',
-  '/logo.jpeg',
-  '/manifest.json',
-  '/assets/app.css',
-  '/assets/app.js'
+  '/',                     // Root
+  '/index.html',           // Entry point
+  '/logo.jpeg',            // Static asset
+  '/manifest.json',        // PWA manifest
+  '/assets/app.css',       // Vite-generated CSS
+  '/assets/app.js'         // Vite-generated JS
+  // Add other assets from dist/ as needed
 ];
 
 self.addEventListener('install', (event) => {
   console.log('[SW] Install');
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then(async (cache) => {
+      try {
+        await cache.addAll(urlsToCache);
+        console.log('[SW] Cached successfully');
+      } catch (err) {
+        console.error('[SW] Failed to cache:', err);
+      }
+    })
   );
   self.skipWaiting();
 });
@@ -33,10 +40,8 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
 
-  // Don't cache API requests
-  if (request.url.includes('/api/')) return;
-
-  if (request.method !== 'GET') return;
+  // Skip non-GET and API requests
+  if (request.method !== 'GET' || request.url.includes('/api/')) return;
 
   event.respondWith(
     caches.match(request).then(cached => {
@@ -46,6 +51,7 @@ self.addEventListener('fetch', (event) => {
         caches.open(CACHE_NAME).then(cache => cache.put(request, responseClone));
         return response;
       }).catch(() => {
+        // Fallback to index.html for navigation requests
         if (request.headers.get('accept')?.includes('text/html')) {
           return caches.match('/index.html');
         }
