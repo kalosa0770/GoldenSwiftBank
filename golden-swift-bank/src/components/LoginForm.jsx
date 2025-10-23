@@ -44,7 +44,9 @@ const LoginForm = ({ onLoginSuccess }) => {
             const url = `${API_BASE_URL}/api/auth`; 
             
             // 💡 Request is sent, browser automatically handles sending and receiving the secure cookie.
-            const response = await axios.post(url, data);
+            const response = await axios.post(url, data, {
+              withCredentials: true,
+            });
 
             // 💡 FIX 1: Destructure ONLY the non-sensitive data (userName, message) from the JSON body.
             // The token is in the HTTP-only cookie and is not in response.data.
