@@ -41,7 +41,7 @@ const LoginForm = ({ onLoginSuccess }) => {
         setStatusMessage(null);
 
         try {
-            const response = await axios.post(`${API_BASE_URL}/api/users`, data, {
+            const response = await axios.post(`${API_BASE_URL}/api/auth`, data, {
               withCredentials: true, // important for HTTP-only cookie
             });
 
