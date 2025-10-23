@@ -1,23 +1,36 @@
 import React from "react";
-import { Bell } from 'lucide-react';
-import logo from '../assets/logo.jpeg'
+import { Bell } from "lucide-react";
+import logo from "../assets/logo.jpeg";
 
 const Header = () => {
-    return (
-        
-        <div className="flex justify-between w-full p-2 sm:p-4">
-            {/* Initial Avatar (Far Left) */}
-            <div className="flex items-center justify-center   transition duration-200 hover:scale-[1.02] cursor-pointer">
-                <img src={logo} className="w-14 h-14 rounded-full ring-2 ring-amber-200 shadow-lg" alt="logo" />
-            </div>
-
-            {/* Notification Icon (ABSOLUTE Far Right) */}
-            <button className="rounded-full hover:bg-amber-100/50 transition duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 **-mr-4 sm:-mr-4**">
-                {/* The Bell icon itself still defines its size and color */}
-                <Bell className="text-gray-800 hover:text-amber-600 w-6 h-6 sm:w-7 sm:h-7" />
-            </button>
+  return (
+    <header className="flex justify-between items-center w-full bg-white p-3 sm:p-4 shadow-sm border-b border-gray-100">
+      {/* Left: Logo / Avatar */}
+      <div className="flex items-center gap-2 cursor-pointer hover:scale-[1.03] transition-transform duration-200">
+        <img
+          src={logo}
+          alt="Golden Swift Logo"
+          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full ring-2 ring-amber-300 shadow-md"
+        />
+        <div className="hidden sm:block">
+          <h2 className="text-gray-800 font-extrabold text-lg tracking-tight">
+            Golden Swift
+          </h2>
+          <p className="text-gray-500 text-xs font-medium">Your Digital Wallet</p>
         </div>
-    );
-}
+      </div>
+
+      {/* Right: Notification Icon */}
+      <button
+        aria-label="Notifications"
+        className="relative p-2 rounded-full hover:bg-amber-100/70 focus:outline-none focus:ring-2 focus:ring-amber-400 transition duration-200"
+      >
+        <Bell className="text-gray-800 hover:text-amber-600 w-6 h-6 sm:w-7 sm:h-7" />
+        {/* Optional notification badge */}
+        <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+      </button>
+    </header>
+  );
+};
 
 export default Header;

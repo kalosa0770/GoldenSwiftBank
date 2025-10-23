@@ -12,35 +12,51 @@ const ActionButtons = () => {
     ];
 
     return (
-        <div className="space-y-3">
-            <h1 className="text-gray-700 font-bold text-lg">Quick Actions</h1>
+        <div className="space-y-5">
+            <h1 className="text-gray-800 font-semibold text-xl tracking-wide">
+                Quick Actions
+            </h1>
 
-            {/* Horizontal scroll container with modified large-screen behavior */}
-            <div className="flex space-x-3 overflow-x-scroll overflow-hidden no-scrollbar py-2 -mx-4 px-4 sm:mx-0 sm:px-0">
+            {/* Scrollable Actions Row */}
+            <div className="flex space-x-4 overflow-x-auto no-scrollbar scroll-smooth py-3 -mx-4 px-4 sm:mx-0 sm:px-0">
                 {actions.map((action, index) => (
-                    <button
-                        key={index}
-                        // *** MODIFIED BUTTON STYLING FOR LG SCREENS ***
-                        className={`flex-shrink-0 flex flex-col items-center justify-center 
-                                    rounded-xl p-3 w-24 h-24 whitespace-nowrap 
-                                    font-semibold text-xs shadow-md transition duration-200 
-                                    transform hover:scale-[1.02] active:scale-95
-                                    
-                                    // On large screens, set the width to 1/3 of the container, minus spacing
-                                    lg:w-[calc((100%-0.75rem*2)/3)] 
-                                    lg:flex-grow lg:flex-shrink 
-                                    
-                                    ${action.primary 
-                                        ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-500/50' 
-                                        : 'bg-white text-gray-700 border border-gray-100 hover:bg-blue-50'
-                                    }`}
+                <button
+                    key={index}
+                    className={`flex-shrink-0 flex flex-col items-center justify-center
+                                rounded-2xl p-4 w-28 h-28 
+                                font-medium text-sm tracking-tight shadow-sm
+                                transition-all duration-300 ease-in-out transform
+                                hover:scale-[1.05] hover:shadow-lg active:scale-95
+                                
+                                lg:w-[calc((100%-0.75rem*2)/3)] 
+                                lg:flex-grow lg:flex-shrink
+                                
+                                ${
+                                action.primary
+                                    ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-blue-400/30'
+                                    : 'bg-white text-gray-700 border border-gray-200 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-100'
+                                }`}
+                >
+                    <div
+                    className={`flex items-center justify-center w-12 h-12 rounded-full mb-2 
+                                ${
+                                    action.primary
+                                    ? 'bg-white/20'
+                                    : 'bg-blue-100 text-blue-600 group-hover:bg-blue-200'
+                                }`}
                     >
-                        <action.icon className={`w-6 h-6 mb-1 ${action.primary ? 'text-white' : 'text-amber-500'}`} />
-                        <span>{action.name}</span>
-                    </button>
+                    <action.icon
+                        className={`w-6 h-6 ${
+                        action.primary ? 'text-white' : 'text-blue-600'
+                        }`}
+                    />
+                    </div>
+                    <span>{action.name}</span>
+                </button>
                 ))}
             </div>
-        </div>
+            </div>
+
     );
 }
 

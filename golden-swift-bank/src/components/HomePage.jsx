@@ -717,7 +717,7 @@ const Footer = () => {
 }
 
 const HomePage = ({onLoginClick, onSignUpClick}) => (
-    <div className="flex flex-col min-h-screen bg-gray-50 font-sans relative overflow-hidden">
+    <div className="font-nunito flex flex-col min-h-screen bg-gray-50 font-sans relative overflow-hidden">
         
         <Header onLoginClick={onLoginClick} onSignUpClick={onSignUpClick}/>
         <div className="flex-1 flex items-center justify-center">

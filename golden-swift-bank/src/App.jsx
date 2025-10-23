@@ -74,14 +74,14 @@ function App() {
   // 💡 FIX 3: Show loading state while isAuthenticated is null
   if (isAuthenticated === null) {
     return (
-        <div className="flex justify-center items-center min-h-screen">
+        <div className="flex justify-center items-center min-h-screen ">
             <p className="text-xl text-gray-700">Checking session...</p>
         </div>
     ); 
   }
 
   return (
-    <div className="font-sans min-h-screen">
+    <div className="font-nunito min-h-screen">
       <Routes>
         <Route path="/" element={<HomePage />} />
 

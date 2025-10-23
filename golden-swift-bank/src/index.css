@@ -40,6 +40,14 @@
   to { transform: translateX(100%); opacity: 0; }
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
 /* Additional custom styles can be added here */
 .slick-slide > div {
   margin: 0 10px;
@@ -48,6 +56,15 @@
 .slick-dots li button:before {
   font-size: 12px;
   color: #000;
+}
+
+@font-face {
+  font-family: Nunito-Variable;
+  src: url('./assets/fonts/Nunito-VariableFont_wght.ttf');
+}
+
+@theme {
+  --font-nunito: Nunito-Variable, 'sans-serif';
 }
 
 

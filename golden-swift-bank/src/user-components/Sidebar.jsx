@@ -1,50 +1,56 @@
 import React from "react";
-import { Home, DollarSign, Zap, User, LogOut} from 'lucide-react';
+import { Home, DollarSign, Zap, User, LogOut } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
-const Sidebar = ({onLogout}) => {
-    const navItems = [
-        { name: 'Home', icon: Home, current: true },
-        { name: 'Transfer', icon: Zap, current: false },
-        { name: 'Wallet', icon: DollarSign, current: false },
-        { name: 'Account', icon: User, current: false },
-    ];
+const Sidebar = ({ onLogout }) => {
+  const navItems = [
+    { name: "Home", icon: Home },
+    { name: "Transfer", icon: Zap },
+    { name: "Wallet", icon: DollarSign },
+    { name: "Account", icon: User },
+  ];
 
-    return (
-        <aside className="hidden md:flex flex-col w-[250px] bg-[#f4f5f6] text-white p-6 shadow-xl sticky top-0 h-screen">
-            {/* Logo/Branding */}
-            <div className="mb-10 pt-4 pb-6 border-b border-blue-600">
-                <h1 className="text-2xl font-black tracking-wider text-gray-800">Golden Swift</h1>
-                <p className="text-xs text-gray-600 mt-1">All-in-One Wallet for People</p>
-            </div>
+  return (
+    <aside className="hidden md:flex flex-col w-[250px] bg-gradient-to-b from-gray-100 to-gray-200 text-gray-800 p-6 shadow-xl sticky top-0 h-screen">
+      {/* Branding */}
+      <div className="mb-10 pt-4 pb-6 border-b border-blue-600">
+        <h1 className="text-2xl font-black tracking-wider text-gray-900">
+          Golden Swift
+        </h1>
+        <p className="text-xs text-gray-600 mt-1">
+          All-in-One Wallet for People
+        </p>
+      </div>
 
-            {/* Navigation Links */}
-            <nav className="flex-grow space-y-4">
-                {navItems.map((item) => (
-                    <a
-                        key={item.name}
-                        href="#"
-                        className={`flex items-center p-3 rounded-xl transition duration-150 font-medium 
-                            ${item.current 
-                                ? 'bg-gradient-to-br from-blue-700 to-blue-500 text-white- shadow-lg' 
-                                : 'text-gray-800 hover:bg-gradient-to-br from-blue-700 to-blue-500 hover:text-white'
-                            }`
-                        }
-                    >
-                        <item.icon className="w-5 h-5 mr-3" />
-                        <span>{item.name}</span>
-                    </a>
-                ))}
-            </nav>
+      {/* Navigation */}
+      <nav className="flex-grow space-y-3">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.name}
+            to={`/${item.name.toLowerCase()}`}
+            className={({ isActive }) =>
+              `flex items-center p-3 rounded-xl font-medium transition duration-200 ${
+                isActive
+                  ? "bg-gradient-to-br from-blue-700 to-blue-500 text-white shadow-lg"
+                  : "text-gray-800 hover:bg-gradient-to-br hover:from-blue-700 hover:to-blue-500 hover:text-white"
+              }`
+            }
+          >
+            <item.icon className="w-5 h-5 mr-3 transition-transform hover:scale-110" />
+            <span>{item.name}</span>
+          </NavLink>
+        ))}
+      </nav>
 
-            {/* Footer Profile Placeholder */}
-           <button 
-                onClick={onLogout} // Calls the prop function to handle global state change
-                className="px-8 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition shadow-lg flex items-center justify-center mx-auto"
-                >
-                <LogOut size={20} className="mr-2"/> Logout
-            </button>
-        </aside>
-    )
-}
+      {/* Logout */}
+      <button
+        onClick={onLogout}
+        className="w-full px-8 py-3 mt-6 bg-gray-600 text-white font-bold rounded-xl hover:bg-gray-700 transition shadow-lg flex items-center justify-center mx-auto"
+      >
+        <LogOut size={20} className="mr-2" /> Logout
+      </button>
+    </aside>
+  );
+};
 
 export default Sidebar;
