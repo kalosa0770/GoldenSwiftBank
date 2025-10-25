@@ -6,6 +6,7 @@ import axios from 'axios';
 import Header from './Header';
 import Greeting from './Greeting';
 import ActionButtons from './ActionButtons';
+import RecentActivities from './RecentActivities';
 import MyWallets from './MyWallets';
 import VirtualCard from './VirtualCard';
 import FooterNav from './FooterNav';
@@ -20,7 +21,7 @@ const UserDashboard = ({ onLogout }) => {
   const navigate = useNavigate();
 
   // Verified user name from backend
-  const [uiUserName, setUiUserName] = useState('');
+  const [uiUserName, setUiUserName] = useState(localStorage.getItem('userName'));
   
   // Track session validity
   const [isSessionValid, setIsSessionValid] = useState(false);
@@ -36,9 +37,10 @@ const UserDashboard = ({ onLogout }) => {
           setIsSessionValid(true);
 
           // Use backend first name
-          const firstName = response.data.firstName || 'User';
-          setUiUserName(firstName);
-          localStorage.setItem('userName', firstName);
+          if (response.data.firstName) {
+              setUiUserName(response.data.firstName); // <-- Sets the state
+              localStorage.setItem('userName', response.data.firstName);
+          }
         } else {
           handleFailedAuth();
         }
@@ -85,8 +87,8 @@ const UserDashboard = ({ onLogout }) => {
         <main className="flex flex-col overflow-y-auto scroll-smooth mx-auto md:p-20 p-10 w-full gap-8 flex-grow no-scrollbar">
           {/* Greeting now receives verified name */}
           <Greeting userName={uiUserName} />
-
           <ActionButtons />
+          <RecentActivities />
           <MyWallets />
           <VirtualCard bank="GoldenSwift Bank"
                 cardNumber="4567890123456789"

@@ -5,6 +5,7 @@ import HomePage from "./components/HomePage";
 import LoginForm from "./components/LoginForm";
 import SignUp from "./components/SignUp";
 import UserDashboard from "./user-components/UserDashboard";
+import { LoaderPinwheel } from 'lucide-react';
 
 // 💡 Global Axios Configuration (Crucial for Cookie Auth)
 // Ensure this is done once in your main app entry point (e.g., index.jsx or here)
@@ -74,8 +75,10 @@ function App() {
   // 💡 FIX 3: Show loading state while isAuthenticated is null
   if (isAuthenticated === null) {
     return (
-        <div className="flex justify-center items-center min-h-screen ">
-            <p className="text-xl text-gray-700">Checking session...</p>
+        <div className="flex justify-center items-center min-h-screen">
+            <p className="text-xl text-gray-700">
+              Loading data... 
+            </p>
         </div>
     ); 
   }
