@@ -35,50 +35,42 @@ const LoginForm = ({ onLoginSuccess }) => {
     const togglePassword = () => setShowPassword(!showPassword);
 
     const handleLogin = async (e) => {
-        e.preventDefault();
-        setError('');
-        setIsLoading(true);
-        setStatusMessage(null);
+      e.preventDefault();
+      setError('');
+      setIsLoading(true);
+      setStatusMessage(null);
+  
+      try {
+          const response = await axios.post(`${API_BASE_URL}/api/auth`, data, {
+            withCredentials: true, // important for HTTP-only cookie
+          });
+  
+          const { userName, message, isAccountVerified, userId } = response?.data;
 
-        try {
-            const response = await axios.post(`${API_BASE_URL}/api/auth`, data, {
-              withCredentials: true, // important for HTTP-only cookie
-            });
-
-            // 💡 FIX 1: Destructure ONLY the non-sensitive data (userName, message) from the JSON body.
-            // The token is in the HTTP-only cookie and is not in response.data.
-            const { userName, message } = response?.data; 
-            
-            // 💡 FIX 2: Check for successful status (200) AND the presence of the required UI data.
-            if (response.status === 200 && userName) {
-                
-                // ❌ REMOVED: localStorage.setItem('authToken', token);
-                
-                // ✅ ACTION: Store only the non-sensitive user name for the UI.
-                localStorage.setItem('userName', userName); 
-                
-                setStatusMessage({ text: message || 'Login successful!', type: 'success' });
-                setError('');
-                
-                // ✅ SUCCESS: Call parent handler to update global auth state and navigate.
-                if (onLoginSuccess) onLoginSuccess(userName); 
-                
-            } else {
-                // If status is 200 but userName is missing, something is wrong with the server response format.
-                setError('Login failed. Server response missing required user name.');
+            if (!isAccountVerified) {
+                // Redirect to OTP page
+                navigate("/verify-account", { state: { userId } });
+                return;
             }
-        } catch (err) {
-            // ❌ REMOVED: localStorage.removeItem('authToken');
-            
-            // On failure (401, 400, or network error), clear the UI username just in case.
-            localStorage.removeItem('userName'); 
-            
-            // Display the specific server error message or a generic one.
-            setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
-        } finally {
-            setIsLoading(false);
-        }
+
+            // Successful login
+            if (userName) {
+                localStorage.setItem("userName", userName);
+                if (onLoginSuccess) onLoginSuccess(userName);
+            }
+      } catch (err) {
+          // Handle unverified account
+          if (err.response?.status === 403 && err.response?.data?.userId) {
+              // Redirect to verify account page with userId
+              navigate("/verify-account", { state: { userId: err.response.data.userId } });
+          } else {
+              setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
+          }
+      } finally {
+          setIsLoading(false);
+      }
     };
+  
     
 
     return (
@@ -152,6 +144,7 @@ const LoginForm = ({ onLoginSuccess }) => {
                   >
                     {isLoading ? 'Logging In...' : 'Login'}
                   </button>
+                  
                   
                   <div className="flex justify-center w-full mt-4 text-sm text-gray-600">
                     Don't have an account? 

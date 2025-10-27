@@ -4,6 +4,7 @@ import axios from 'axios';
 import HomePage from "./components/HomePage";
 import LoginForm from "./components/LoginForm";
 import SignUp from "./components/SignUp";
+import VerifyAccount from "./components/VerifyAccount";
 import UserDashboard from "./user-components/UserDashboard";
 import { LoaderPinwheel } from 'lucide-react';
 
@@ -101,6 +102,12 @@ function App() {
           // Pass the corrected handler function
           element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginForm onLoginSuccess={handleLoginSuccess}/>}
         />
+
+        <Route
+          path="/verify-account"
+          element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <VerifyAccount />}
+        />
+
 
         {/* Protected Dashboard */}
         <Route

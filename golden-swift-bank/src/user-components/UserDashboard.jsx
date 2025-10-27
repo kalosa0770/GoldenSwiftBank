@@ -12,9 +12,6 @@ import VirtualCard from './VirtualCard';
 import FooterNav from './FooterNav';
 import Sidebar from './Sidebar';
 
-// 💡 Make sure axios sends cookies
-// axios.defaults.withCredentials = true;
-
 const API_BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:3001';
 
 const UserDashboard = ({ onLogout }) => {
@@ -27,19 +24,27 @@ const UserDashboard = ({ onLogout }) => {
   const [isSessionValid, setIsSessionValid] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Verify cookie/session on mount
   useEffect(() => {
     const verifySession = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/auth/verify-session`);
+        const response = await axios.get(`${API_BASE_URL}/api/auth/verify-session`, {
+          withCredentials: true
+        });
 
-        if (response.status === 200 && response.data.isAuthenticated) {
+        if (response.status === 200) {
+          const { userName, isAccountVerified, _id } = response.data;
+
+          if (!isAccountVerified) {
+            // Redirect unverified users to OTP page
+            navigate('/verify-account', { state: { userId: _id } });
+            return;
+          }
+
           setIsSessionValid(true);
 
-          // Use backend first name
-          if (response.data.firstName) {
-              setUiUserName(response.data.firstName); // <-- Sets the state
-              localStorage.setItem('userName', response.data.firstName);
+          if (userName) {
+            setUiUserName(userName);
+            localStorage.setItem('userName', userName);
           }
         } else {
           handleFailedAuth();
@@ -85,16 +90,17 @@ const UserDashboard = ({ onLogout }) => {
         </header>
 
         <main className="flex flex-col overflow-y-auto scroll-smooth mx-auto md:p-20 p-10 w-full gap-8 flex-grow no-scrollbar">
-          {/* Greeting now receives verified name */}
           <Greeting userName={uiUserName} />
           <ActionButtons />
           <RecentActivities />
           <MyWallets />
-          <VirtualCard bank="GoldenSwift Bank"
-                cardNumber="4567890123456789"
-                cardHolder="Elijah Kalosa"
-                expiry="12/29" className="w-full max-w-md mx-auto" 
-            />
+          <VirtualCard 
+            bank="GoldenSwift Bank"
+            cardNumber="4567890123456789"
+            cardHolder={uiUserName || "User"}
+            expiry="12/29"
+            className="w-full max-w-md mx-auto" 
+          />
 
           {/* Spacer for footer */}
           <div className="h-20 sm:h-6" />
