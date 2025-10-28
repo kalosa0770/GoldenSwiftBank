@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-
-// Placeholder image URL since local files like '../assets/manImg.jpeg' won't compile
-const PLACEHOLDER_IMG_URL = "https://placehold.co/400x400/1e293b/ffffff?text=Golden+Swift+Bank";
+import manImg from '../assets/manImg.jpeg';
 
 // Tam taḥdīd al-'unwān al-'asāsī li-API bi-shakl thābit li-taḥrīr al-taḥdhīrāt al-muta'alliqah bi-import.meta.env
 // We default to the local fallback as VITE_BASE_URL might not be available
@@ -113,7 +111,7 @@ const LoginForm = ({ onLoginSuccess }) => {
                     {/* Left Column*/}
                     <div className="md:w-1/2 bg-indigo-700 p-8 flex items-center justify-center">
                         <img 
-                            src={PLACEHOLDER_IMG_URL} 
+                            src={manImg} 
                             alt="Professional using a laptop" 
                             className="w-full h-full object-cover rounded-xl shadow-lg" 
                             style={{ aspectRatio: '1/1', objectFit: 'cover' }}
