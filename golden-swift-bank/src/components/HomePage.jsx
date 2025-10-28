@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect, useMemo} from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import Logo from '../assets/logo.jpeg';
-import LadyImg from '../assets/ladyImg.jpeg';
+import LadyImg from '../assets/manImg.jpeg';
 import {Link} from 'react-router-dom';
 import { Menu, X, ArrowRight, ArrowLeft, Zap, ShieldCheck, TrendingUp, MapPin, ReceiptText, Signal, Facebook, Twitter, Linkedin } from 'lucide-react';
 import Slider from "react-slick";
@@ -60,14 +60,14 @@ const Header = ({onLoginClick, onSignUpClick}) => {
                         className='w-14 h-14 rounded-full shadow-md shadow-blue-100' 
                     />
                     <div className="flex flex-col font-bold py-1 px-2">
-                        <h1 className='text-blue-800'>Golden Swift</h1>
+                        <h1 className='text-gradient-to-br from-gray-900 via-gray-800 to-black'>Golden Swift</h1>
                         <p className='text-gray-600 text-sm'>One wallet. Everything connected</p>
                     </div>
                 </div>
 
                 {/* Desktop Nav */}
                 <ul className="hidden md:flex items-center gap-6 list-none text-sm">
-                    <li className={`bg-blue-700 text-white font-bold rounded-lg py-3 px-2 text-sm transition duration-200 ${!deferredPrompt ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500'}`}>
+                    <li className={`bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white font-bold rounded-lg py-3 px-2 text-sm transition duration-200 ${!deferredPrompt ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500'}`}>
                         <button 
                             onClick={handleInstallClick}
                             className='border-none text-white'
@@ -77,14 +77,14 @@ const Header = ({onLoginClick, onSignUpClick}) => {
                             {deferredPrompt ? 'Download App' : 'App Ready'}
                         </button>
                     </li>
-                    <li className='bg-none border-2 border-amber-500 hover:bg-blue-500 text-blue-700 font-bold rounded-lg py-3 px-2 text-sm transition duration-200'>
+                    <li className='bg-none border-2 border-black  text-black font-bold rounded-lg py-3 px-2 text-sm transition duration-200'>
                        <Link to="/login">
                          <button>Sign in</button>
                        </Link> 
                     </li>
                     <li className='border-none transparent text-gray-900'>
                           <Link to="/signup">
-                                <button className='bg-amber-500 hover:bg-amber-400 text-white rounded-lg py-3 px-5 text-sm font-bold transition duration-200 shadow-lg'>Sign up</button>
+                                <button className='text-gradient-to-br from-gray-900 via-gray-800 to-black bg-none border-2 border-black  rounded-lg py-3 px-5 text-sm font-bold transition duration-200 shadow-lg'>Sign up</button>
                             </Link>
                     </li>
                 </ul>
@@ -189,7 +189,7 @@ const CallToAction = () => {
                     {/* PRIMARY CTA BUTTON (Re-added for complete section) */}
                     <button
                         type="button"
-                        className="bg-blue-700 hover:bg-sky-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-200 w-fit"
+                        className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-200 w-fit"
                     >
                         Start Saving Today
                     </button>
@@ -225,7 +225,7 @@ const CallToAction = () => {
                             </div>
                             <button
                                 type="button"
-                                className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition duration-200 w-full"
+                                className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white font-bold py-3 px-8 rounded-xl shadow-lg transition duration-200 w-full"
                             >
                                 Calculate Transfer
                             </button>
@@ -297,7 +297,7 @@ const Offers = () => {
         ]
     };
     return (
-        <div className="flex flex-col items-center justify-center py-10 px-6 sm:px-12 bg-amber-500 gap-6 rounded-t-3xl shadow-2xl shadow-blue-900/50">
+        <div className="flex flex-col items-center justify-center py-10 px-6 sm:px-12 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white gap-6 rounded-t-3xl shadow-2xl shadow-blue-900/50">
             <h1 className='text-3xl lg:text-5xl text-white text-center font-extrabold tracking-tight mb-4'>
                 One wallet, everything connected
             </h1>
@@ -382,7 +382,7 @@ const Features = () => {
                         </div>
                         
                         {/* CTA Button */}
-                        <button className='mt-12 w-full md:w-auto self-start bg-blue-600 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-[1.02] active:scale-95'>
+                        <button className='mt-12 w-full md:w-auto self-start bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-[1.02] active:scale-95'>
                             Get Started Today
                         </button>
                         
@@ -395,23 +395,23 @@ const Features = () => {
 
 const serviceItems = [
     { title: "Instant Transfers", 
-      icon: <Zap className="w-10 h-10 text-amber-500" />,
+      icon: <Zap className="w-10 h-10 text-gradient-to-br from-gray-900 via-gray-800 to-black" />,
       description: "Send and receive funds in seconds, eliminating delays and hassle. Your money moves at the speed of life." 
     },
     { title: "Smart Savings", 
-      icon: <TrendingUp className="w-10 h-10 text-amber-500" />,
+      icon: <TrendingUp className="w-10 h-10 text-gradient-to-br from-gray-900 via-gray-800 to-black" />,
       description: "Digitize your savings goals, set automated rules, and watch your finances grow intelligently. Start building wealth today." 
     },
     { title: "Cash In/Out Network", 
-      icon: <MapPin className="w-10 h-10 text-amber-500" />,
+      icon: <MapPin className="w-10 h-10 text-gradient-to-br from-gray-900 via-gray-800 to-black" />,
       description: "Access cash easily through our vast agent network. The physical and digital meet seamlessly." 
     },
     { title: "Pay Bills Globally", 
-      icon: <ReceiptText className="w-10 h-10 text-amber-500" />,
+      icon: <ReceiptText className="w-10 h-10 text-gradient-to-br from-gray-900 via-gray-800 to-black" />,
       description: "Pay utility bills, tuition, and subscriptions for family or business, all from one secure dashboard." 
     },
     { title: "Airtime Top-Up", 
-      icon: <Signal className="w-10 h-10 text-amber-500" />,
+      icon: <Signal className="w-10 h-10 text-gradient-to-br from-gray-900 via-gray-800 to-black" />,
       description: "Instantly top up mobile airtime for any major network. Stay connected with loved ones effortlessly." 
     },
 ];
@@ -453,7 +453,7 @@ const Services = () => {
                     {/* Previous Button */}
                     <button 
                         onClick={prevSlide} 
-                        className='rounded-full bg-amber-500 text-white p-3 shadow-md hover:bg-amber-600 transition duration-150 transform hover:scale-105 active:scale-95'
+                        className='rounded-full bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-3 shadow-md hover:bg-amber-600 transition duration-150 transform hover:scale-105 active:scale-95'
                         aria-label="Previous Service"
                     >
                         <ArrowLeft className='w-6 h-6' />
@@ -461,7 +461,7 @@ const Services = () => {
                     {/* Next Button */}
                     <button 
                         onClick={nextSlide} 
-                        className='rounded-full bg-amber-500 text-white p-3 shadow-md hover:bg-amber-600 transition duration-150 transform hover:scale-105 active:scale-95'
+                        className='rounded-full bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-3 shadow-md hover:bg-amber-600 transition duration-150 transform hover:scale-105 active:scale-95'
                         aria-label="Next Service"
                     >
                         <ArrowRight className='w-6 h-6' />
@@ -474,7 +474,7 @@ const Services = () => {
                         <div
                             key={index}
                             className={`h-2 rounded-full transition-all duration-300 ${
-                                index === current ? 'w-8 bg-blue-600' : 'w-2 bg-gray-400'
+                                index === current ? 'w-8 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white' : 'w-2 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white'
                             }`}
                         ></div>
                     ))}
@@ -494,7 +494,7 @@ const Services = () => {
                         className="bg-white rounded-3xl shadow-xl p-8 md:p-12 h-96 flex flex-col justify-between service-card relative overflow-hidden"
                     >
                         {/* Icon and Title */}
-                        <div className="flex items-center space-x-4 mb-4">
+                        <div className="flex items-center space-x-4 mb-4 ">
                             {currentItem.icon}
                             <h2 className="text-3xl font-extrabold text-gray-800">
                                 {currentItem.title}
@@ -507,7 +507,7 @@ const Services = () => {
                         </p>
 
                         {/* Card Footer */}
-                        <button className='mt-8 w-40 text-blue-600 border border-blue-600 font-semibold py-2 rounded-full hover:bg-blue-50 transition duration-200'>
+                        <button className='mt-8 w-40 border-gradient-to-br from-gray-900 via-gray-800 to-black text-black border  font-semibold py-2 rounded-full hover:bg-blue-50 transition duration-200'>
                             Learn More
                         </button>
                     </div>
@@ -543,21 +543,21 @@ const Goal = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5 max-w-3xl w-full mx-auto items-center justify-center text-center px-4">
                     <div className="flex flex-col ">
-                        <h1 className='text-gray-800 font-bold md:text-2xl text-3xl'>Users</h1>
-                        <p className={`${inView ? 'text-gray-700 md:text-lg text-sm font-extrabold' : ''}`}>
+                        <h1 className='text-gradient-to-br from-gray-900 via-gray-800 to-black font-bold md:text-2xl text-3xl'>Users</h1>
+                        <p className={`${inView ? 'text-gradient-to-br from-gray-900 via-gray-800 to-black md:text-xl text-lg font-extrabold' : ''}`}>
                             {inView && <CountUp start={0} end={1000000} duration={5} ></CountUp>}+
                         </p>
                     </div>
                     
                     <div className="flex flex-col">
-                        <h1 className='text-gray-800 font-bold md:text-2xl text-3xl'>Agents</h1>
-                        <p className={`${inView ? 'text-gray-700 md:text-lg text-sm font-extrabold' : ''}`}>
+                        <h1 className='text-gradient-to-br from-gray-900 via-gray-800 to-black font-bold md:text-2xl text-3xl'>Agents</h1>
+                        <p className={`${inView ? 'text-gradient-to-br from-gray-900 via-gray-800 to-black md:text-xl text-lg font-extrabold' : ''}`}>
                             {inView && <CountUp start={0} end={5000} duration={3}></CountUp>}+
                         </p>
                     </div>
                     <div className="flex flex-col">
-                        <h1 className='text-gray-800 font-bold md:text-2xl text-3xl'>Cost Reduction</h1>
-                        <p className={`${inView ? 'text-gray-700 md:text-lg text-sm font-extrabold' : ''}`}>
+                        <h1 className='text-gradient-to-br from-gray-900 via-gray-800 to-black font-bold md:text-2xl text-3xl'>Cost Reduction</h1>
+                        <p className={`${inView ? 'text-gradient-to-br from-gray-900 via-gray-800 to-black md:text-xl text-lg font-extrabold' : ''}`}>
                             {inView && <CountUp start={0} end={40} duration={2}></CountUp>}%
                         </p>
                     </div>
@@ -586,7 +586,7 @@ const Steps = () => {
                         <div className="flex mb-12 relative">
                             <div className="flex flex-col items-center mr-6 w-12 z-10 flex-shrink-0">
                                 {/* Number Circle */}
-                                <div className="size-12 rounded-full bg-gray-600 shadow-lg flex items-center justify-center flex-shrink-0">
+                                <div className="size-12 rounded-full bg-gradient-to-br from-gray-900 via-gray-800 to-black shadow-lg flex items-center justify-center flex-shrink-0">
                                     <span className="text-white text-xl font-bold">1</span>
                                 </div>
                             </div>
@@ -605,7 +605,7 @@ const Steps = () => {
                             {/* Left Column: Number and Line Connection */}
                             <div className="flex flex-col items-center mr-6 w-12 z-10 flex-shrink-0">
                                 {/* Number Circle */}
-                                <div className="size-12 rounded-full bg-gray-600 shadow-lg flex items-center justify-center flex-shrink-0">
+                                <div className="size-12 rounded-full bg-gradient-to-br from-gray-900 via-gray-800 to-black shadow-lg flex items-center justify-center flex-shrink-0">
                                     <span className="text-white text-xl font-bold">2</span>
                                 </div>
                             </div>
@@ -624,7 +624,7 @@ const Steps = () => {
                             {/* Left Column: Number and Line Connection */}
                             <div className="flex flex-col items-center mr-6 w-12 z-10 flex-shrink-0">
                                 {/* Number Circle */}
-                                <div className="size-12 rounded-full bg-gray-600 shadow-lg flex items-center justify-center flex-shrink-0">
+                                <div className="size-12 rounded-full bg-gradient-to-br from-gray-900 via-gray-800 to-black shadow-lg flex items-center justify-center flex-shrink-0">
                                     <span className="text-white text-xl font-bold">3</span>
                                 </div>
                             </div>
@@ -644,7 +644,7 @@ const Steps = () => {
                 
                 
                 {/* CTA Button */}
-                <button className='mt-16 bg-gray-500 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-amber-600 transition duration-300 mx-auto block'>
+                <button className='mt-16 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-amber-600 transition duration-300 mx-auto block'>
                     Sign Up Now
                 </button>
             </div>
