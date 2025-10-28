@@ -13,13 +13,11 @@ const Sidebar = ({ onLogout }) => {
   return (
     <aside className="hidden md:flex flex-col w-[250px] bg-gradient-to-b from-gray-100 to-gray-200 text-gray-800 p-6 shadow-xl sticky top-0 h-screen">
       {/* Branding */}
-      <div className="mb-10 pt-4 pb-6 border-b border-blue-600">
+      <div className="mb-10 pt-4 pb-6 border-b border-amber-400">
         <h1 className="text-2xl font-black tracking-wider text-gray-900">
           Golden Swift
         </h1>
-        <p className="text-xs text-gray-600 mt-1">
-          All-in-One Wallet for People
-        </p>
+        <p className="text-xs text-gray-600 mt-1">All-in-One Wallet for People</p>
       </div>
 
       {/* Navigation */}
@@ -31,8 +29,8 @@ const Sidebar = ({ onLogout }) => {
             className={({ isActive }) =>
               `flex items-center p-3 rounded-xl font-medium transition duration-200 ${
                 isActive
-                  ? "bg-gradient-to-br from-blue-700 to-blue-500 text-white shadow-lg"
-                  : "text-gray-800 hover:bg-gradient-to-br hover:from-blue-700 hover:to-blue-500 hover:text-white"
+                  ? "bg-gradient-to-br from-amber-600 to-amber-400 text-white shadow-lg"
+                  : "text-gray-800 hover:bg-gradient-to-br hover:from-amber-500 hover:to-amber-300 hover:text-white"
               }`
             }
           >
@@ -45,7 +43,7 @@ const Sidebar = ({ onLogout }) => {
       {/* Logout */}
       <button
         onClick={onLogout}
-        className="w-full px-8 py-3 mt-6 bg-gray-600 text-white font-bold rounded-xl hover:bg-gray-700 transition shadow-lg flex items-center justify-center mx-auto"
+        className="w-full px-8 py-3 mt-6 bg-gradient-to-br from-amber-600 to-amber-400 text-white font-bold rounded-xl hover:from-amber-500 hover:to-amber-300 transition shadow-lg flex items-center justify-center mx-auto"
       >
         <LogOut size={20} className="mr-2" /> Logout
       </button>
