@@ -57,20 +57,6 @@ const Greeting = ({ userName }) => {
               </span>
               <span className="font-bold text-yellow-400">12</span>
             </li>
-            <li className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-gray-200">
-                <PiggyBank className="w-4 h-4 text-yellow-300" /> 
-                Savings progress
-              </span>
-              <span className="font-bold text-green-400">78%</span>
-            </li>
-            <li className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-gray-200">
-                <TrendingUp className="w-4 h-4 text-yellow-300" /> 
-                Monthly growth
-              </span>
-              <span className="font-bold text-amber-400">+12%</span>
-            </li>
           </ul>
         </div>
       </div>

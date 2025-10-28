@@ -7,7 +7,7 @@ const CheckBalance = () => {
   const toggleBalance = () => setHidden(!hidden);
 
   return (
-    <div className="relative bg-gradient-to-br from-white/90 to-blue-50/90 p-5 rounded-2xl shadow-md border border-white/40 backdrop-blur-sm hover:shadow-lg transition-all duration-300 w-full max-w-sm">
+    <div className="">
       {/* Header */}
       <div className="flex justify-between items-center mb-5">
         <div className="flex items-center gap-2">
@@ -31,25 +31,14 @@ const CheckBalance = () => {
       </div>
 
       {/* Balance Display */}
-      <div className="text-start mb-5">
+      <div className="text-center mb-5">
         {hidden ? (
-          <span className="text-3xl tracking-widest text-gray-400 select-none">
+          <span className="text-3xl tracking-widest text-white select-none">
             ••••
           </span>
         ) : (
-          <span className="text-3xl font-extrabold text-gray-900">$500.00</span>
+          <span className="text-3xl font-extrabold">$500.00</span>
         )}
-      </div>
-
-      {/* Toggle Button */}
-      <div className="flex justify-start">
-        <button
-          onClick={toggleBalance}
-          className="group flex items-center gap-2 text-sm font-semibold text-blue-700 hover:text-blue-900 transition-colors"
-        >
-          {hidden ? "View Balance" : "Hide Balance"}
-          <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" />
-        </button>
       </div>
     </div>
   );
