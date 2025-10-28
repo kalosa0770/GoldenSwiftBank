@@ -28,10 +28,7 @@ const LoginForm = ({ onLoginSuccess }) => {
     }
   }, [location.state, navigate, location.pathname]);
 
-  const handleChange = ({ currentTarget: input }) => {
-    setData({ ...data, [input.name]: input.value });
-  };
-
+  const handleChange = ({ currentTarget: input }) => setData({ ...data, [input.name]: input.value });
   const togglePassword = () => setShowPassword(!showPassword);
 
   const handleLogin = async (e) => {
@@ -45,28 +42,25 @@ const LoginForm = ({ onLoginSuccess }) => {
       const response = await axios.post(`${API_BASE_URL}/api/auth`, data, { withCredentials: true });
       const { userName, isAccountVerified, userId } = response?.data;
 
-      if (userName) {
-        localStorage.setItem("userName", userName);
-        if (onLoginSuccess) onLoginSuccess(userName, isAccountVerified, userId);
+      // ✅ Immediately call onLoginSuccess to update App state
+      if (onLoginSuccess) onLoginSuccess(userName, isAccountVerified, userId);
 
-        // ✅ Show success modal
+      if (isAccountVerified) {
         setShowSuccessModal(true);
         setModalProgress(100);
 
-        // Countdown redirect
         const interval = setInterval(() => {
           setModalProgress(prev => {
             if (prev <= 0) {
               clearInterval(interval);
               setShowSuccessModal(false);
-              navigate('/dashboard');
+              navigate('/dashboard', { replace: true });
               return 0;
             }
-            return prev - 2; // adjust speed if needed
+            return prev - 2;
           });
         }, 60);
       }
-
     } catch (err) {
       const responseStatus = err.response?.status;
       const responseData = err.response?.data;
@@ -87,7 +81,6 @@ const LoginForm = ({ onLoginSuccess }) => {
 
   const handleResendOtp = async () => {
     if (!userIdToVerify) return;
-
     setOtpSending(true);
     setStatusMessage(null);
 
@@ -105,7 +98,7 @@ const LoginForm = ({ onLoginSuccess }) => {
     <div className="relative flex min-h-screen w-full items-center justify-center bg-gray-100 font-sans p-4">
       <div className="absolute inset-0 bg-gradient-to-br from-amber-700 to-sky-400 opacity-90" />
 
-      {/* ✅ Success Modal */}
+      {/* Success Modal */}
       {showSuccessModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white rounded-xl p-6 w-80 flex flex-col items-center shadow-lg">
@@ -124,7 +117,7 @@ const LoginForm = ({ onLoginSuccess }) => {
       <div className="relative z-10 flex w-full items-center justify-center">
         <div className="md:flex block w-full max-w-4xl bg-white rounded-2xl shadow-2xl shadow-blue-500/60 overflow-hidden">
 
-          {/* Left Column */}
+          {/* Left */}
           <div className="md:w-1/2 bg-indigo-700 p-8 flex items-center justify-center">
             <img 
               src={manImg} 
@@ -134,7 +127,7 @@ const LoginForm = ({ onLoginSuccess }) => {
             />
           </div>
 
-          {/* Right Column: Form */}
+          {/* Right Form */}
           <div className="w-full md:w-1/2 p-8 sm:p-10 flex flex-col justify-center">
             {statusMessage && (
               <div className={`p-3 mb-4 rounded-xl text-center font-medium transition-all duration-300
@@ -158,6 +151,7 @@ const LoginForm = ({ onLoginSuccess }) => {
                   className="border border-gray-300 p-3 rounded-xl w-full focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition" 
                 />
               </div>
+
               <div className="w-full relative">
                 <label className='text-gray-600 text-lg mb-2 block'>Password</label>
                 <input 
@@ -178,6 +172,7 @@ const LoginForm = ({ onLoginSuccess }) => {
                   {showPassword ? 'Hide' : 'Show'}
                 </button>
               </div>
+
               {error && <div className="text-red-500 bg-red-50 p-2 rounded-xl text-sm font-medium">{error}</div>}
               
               <button 
