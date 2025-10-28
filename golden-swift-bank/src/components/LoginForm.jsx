@@ -40,7 +40,13 @@ const LoginForm = ({ onLoginSuccess }) => {
 
     try {
       const response = await axios.post(`${API_BASE_URL}/api/auth`, data, { withCredentials: true });
-      const { userName, isAccountVerified, userId } = response?.data;
+      console.log("Login response:", response.data);
+      const { userName, isAccountVerified, userId } = response.data;
+
+      if (!isAccountVerified) {
+        navigate('/verify-account', { state: { userId } });
+        return;
+      }
 
       // ✅ Immediately call onLoginSuccess to update App state
       if (onLoginSuccess) onLoginSuccess(userName, isAccountVerified, userId);
