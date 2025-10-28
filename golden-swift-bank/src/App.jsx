@@ -56,7 +56,7 @@ function App() {
     verifyInitialSession();
   }, []);
 
-  // --- Loading state ---
+  // --- Loading state herer ---
   if (isAuthenticated === null) {
     return (
       <div className="flex justify-center items-center min-h-screen">
