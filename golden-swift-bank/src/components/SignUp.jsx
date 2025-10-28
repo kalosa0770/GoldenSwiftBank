@@ -98,7 +98,7 @@ const SignUp = () => {
 
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center bg-gray-100 font-sans p-4">
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-700 to-sky-400 opacity-90" />
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-700 via-gray-800 to-black opacity-90" />
 
       {/* ✅ Success Popup (Toast) */}
       {showSuccess && (
@@ -122,7 +122,7 @@ const SignUp = () => {
         <div className="md:flex block w-full max-w-4xl bg-white rounded-2xl shadow-2xl shadow-blue-500/60 overflow-hidden">
 
           {/* Left Column */}
-          <div className="md:w-1/2 bg-indigo-700 p-8">
+          <div className="md:w-1/2 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-8">
             <img
               src={manImg}
               alt="Professional using a laptop"
@@ -133,7 +133,7 @@ const SignUp = () => {
 
           {/* Right Column */}
           <div className="w-full md:w-1/2 p-8 sm:p-10 flex flex-col justify-center">
-            <h1 className="text-2xl font-extrabold text-gray-800 mb-6 text-center">Join the journey</h1>
+            <h1 className="text-2xl font-extrabold text-gray-800 mb-6 text-center">Start Transfering today</h1>
             <form onSubmit={handleSignUp} className="flex flex-col gap-5">
 
               {/* Name Fields */}

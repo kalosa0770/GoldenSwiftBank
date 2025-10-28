@@ -102,7 +102,7 @@ const LoginForm = ({ onLoginSuccess }) => {
 
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center bg-gray-100 font-sans p-4">
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-700 to-sky-400 opacity-90" />
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-700 via-gray-800 to-black opacity-90" />
 
       {/* Success Modal */}
       {showSuccessModal && (
@@ -124,7 +124,7 @@ const LoginForm = ({ onLoginSuccess }) => {
         <div className="md:flex block w-full max-w-4xl bg-white rounded-2xl shadow-2xl shadow-blue-500/60 overflow-hidden">
 
           {/* Left */}
-          <div className="md:w-1/2 bg-indigo-700 p-8 flex items-center justify-center">
+          <div className="md:w-1/2 bg-gradient-to-br from-gray-900 via-gray-800 to-black p-8 p-8 flex items-center justify-center">
             <img 
               src={manImg} 
               alt="Professional using a laptop" 
