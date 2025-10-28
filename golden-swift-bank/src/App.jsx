@@ -20,15 +20,15 @@ function App() {
   const handleLoginSuccess = useCallback((userName, isVerified, userId) => {
     if (userName) localStorage.setItem("userName", userName);
 
-    if (!isVerified) {
-      // Show OTP resend option
+    if (isVerified) {
+      // 1. Set Auth State (This triggers the navigation in the useEffect below)
+      setIsAuthenticated(true); 
+    } else {
+      // Handle unverified user case
       setUnverifiedUserId(userId);
+      // We still redirect to verify-account immediately if this is the flow needed.
       navigate("/verify-account", { replace: true });
-      return;
     }
-
-    setIsAuthenticated(true);
-    navigate('/dashboard', { replace: true });
   }, [navigate]);
 
   const handleLogout = useCallback(async () => {
@@ -46,8 +46,13 @@ function App() {
   useEffect(() => {
     const verifyInitialSession = async () => {
       try {
-        await axios.get(`${API_BASE_URL}/api/auth/verify-session`);
-        setIsAuthenticated(true);
+        const response = await axios.get(`${API_BASE_URL}/api/auth/verify-session`);
+        // We can use the response to check if the session is verified
+        if (response.data.isAuthenticated) {
+            setIsAuthenticated(true);
+        } else {
+            setIsAuthenticated(false);
+        }
       } catch {
         setIsAuthenticated(false);
         localStorage.removeItem("userName");
@@ -55,6 +60,15 @@ function App() {
     };
     verifyInitialSession();
   }, []);
+  
+  // --- FIX: Navigation Effect ---
+  // This useEffect ensures navigation only happens *after* isAuthenticated has updated to true.
+  useEffect(() => {
+    if (isAuthenticated === true) {
+        navigate('/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
 
   // --- Loading state herer ---
   if (isAuthenticated === null) {
@@ -79,7 +93,7 @@ function App() {
           path="/signup"
           element={
             isAuthenticated
-              ? <Navigate to="/verify-account" replace />
+              ? <Navigate to="/dashboard" replace />
               : <SignUp />
           }
         />
@@ -99,7 +113,7 @@ function App() {
           path="/verify-account"
           element={
             isAuthenticated
-              ? <Navigate to="/login" replace />
+              ? <Navigate to="/dashboard" replace />
               : <VerifyAccount unverifiedUserId={unverifiedUserId} />
           }
         />
