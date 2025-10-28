@@ -63,16 +63,17 @@ const SignUp = () => {
       if (res.status === 201) {
         const userId = res.data?.user?._id;
   
-        // Show success toast
+        // Show modal toast
         setShowSuccess(true);
         setProgress(100);
   
-        // Countdown redirect to verify page
+        // Countdown redirect
         const interval = setInterval(() => {
           setProgress(prev => {
             if (prev <= 0) {
               clearInterval(interval);
-              setShowSuccess(false); // hide toast
+              setShowSuccess(false); // hide modal
+              // redirect AFTER modal countdown ends
               navigate('/verify-account', { state: { userId } });
               return 0;
             }
@@ -90,6 +91,7 @@ const SignUp = () => {
     }
   };
   
+  
 
   const isFormValid = passwordValidations.every(rule => rule.valid) &&
     data.firstName && data.lastName && data.email && data.password;
@@ -100,16 +102,18 @@ const SignUp = () => {
 
       {/* ✅ Success Popup (Toast) */}
       {showSuccess && (
-        <div className="fixed top-6 right-6 z-50 bg-green-100 border border-green-400 text-green-800 px-5 py-4 rounded-xl shadow-lg w-80 animate-fade-in">
-          <div className="flex items-center gap-3">
-            <CheckCircle size={20} className="text-green-600" />
-            <p className="font-semibold">Registration successful! Redirecting to verification...</p>
-          </div>
-          <div className="h-2 bg-green-300 rounded-full mt-3 overflow-hidden">
-            <div
-              className="h-2 bg-green-600 transition-all duration-100 ease-linear"
-              style={{ width: `${progress}%` }}
-            />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-xl shadow-lg p-8 w-80 text-center animate-fade-in">
+            <CheckCircle size={40} className="mx-auto text-green-600 mb-4" />
+            <h2 className="text-lg font-bold text-gray-800 mb-2">Registration Successful!</h2>
+            <p className="text-gray-600 mb-4">Redirecting to Verify Account page...</p>
+
+            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div
+                className="h-2 bg-green-600 transition-all duration-100 ease-linear"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
           </div>
         </div>
       )}
