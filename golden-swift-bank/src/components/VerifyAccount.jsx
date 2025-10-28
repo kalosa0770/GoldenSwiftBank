@@ -14,13 +14,17 @@ const VerifyAccount = () => {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  // --- Send OTP ---
   const handleSendOtp = async () => {
-    if (!userId) return;
+    if (!userId) {
+      setMessage('User ID is missing.');
+      return;
+    }
     setIsLoading(true);
     try {
       const res = await axios.post(`${API_BASE_URL}/api/otp/send-verify-otp`, { userId });
       setMessage(res.data.message || 'OTP sent successfully!');
-      setOtpSent(true);
+      setOtpSent(true); // ✅ Switch to OTP input after successful send
     } catch (err) {
       setMessage(err.response?.data?.message || 'Failed to send OTP');
     } finally {
@@ -28,6 +32,7 @@ const VerifyAccount = () => {
     }
   };
 
+  // --- Verify OTP ---
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     if (!otp || !userId) return;
@@ -35,8 +40,7 @@ const VerifyAccount = () => {
     try {
       const res = await axios.post(`${API_BASE_URL}/api/otp/verify-email`, { userId, otp });
       setMessage(res.data.message || 'Account verified!');
-      // redirect to dashboard
-      navigate('/dashboard', { replace: true });
+      navigate('/dashboard', { replace: true }); // ✅ Redirect after verification
     } catch (err) {
       setMessage(err.response?.data?.message || 'OTP verification failed');
     } finally {
@@ -47,20 +51,31 @@ const VerifyAccount = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <h1 className="text-2xl font-bold mb-6">Verify Your Account</h1>
-      {message && <div className="mb-4 p-2 bg-yellow-100 text-yellow-700 rounded">{message}</div>}
 
-      {!otpSent ? (
+      {message && (
+        <div className="mb-4 p-3 bg-yellow-100 text-yellow-700 rounded-md w-full max-w-xs text-center">
+          {message}
+        </div>
+      )}
+
+      {/* Step 1: Show Send OTP button */}
+      {!otpSent && (
         <button
           onClick={handleSendOtp}
           disabled={isLoading}
-          className={`py-3 px-6 rounded-xl font-bold ${
-            isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-amber-600 hover:bg-amber-700 text-white'
+          className={`py-3 px-6 rounded-xl font-bold transition-all ${
+            isLoading
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-amber-600 hover:bg-amber-700 text-white'
           }`}
         >
           {isLoading ? 'Sending OTP...' : 'Send OTP'}
         </button>
-      ) : (
-        <form onSubmit={handleVerifyOtp} className="flex flex-col gap-4 w-full max-w-xs">
+      )}
+
+      {/* Step 2: Show OTP form after sending */}
+      {otpSent && (
+        <form onSubmit={handleVerifyOtp} className="flex flex-col gap-4 w-full max-w-xs mt-4">
           <input
             type="text"
             placeholder="Enter OTP"
@@ -72,8 +87,10 @@ const VerifyAccount = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`py-3 rounded-xl font-bold ${
-              isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-amber-600 hover:bg-amber-700 text-white'
+            className={`py-3 rounded-xl font-bold transition-all ${
+              isLoading
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-amber-600 hover:bg-amber-700 text-white'
             }`}
           >
             {isLoading ? 'Verifying...' : 'Verify OTP'}
