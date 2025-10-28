@@ -13,12 +13,20 @@ const API_BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:3001'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null); // null = checking
-  const [unverifiedUserId, setUnverifiedUserId] = useState(null);
+  const [unverifiedUserId, setUnverifiedUserId] = useState(null); // for OTP resend
   const navigate = useNavigate();
 
   // --- Login Success Handler ---
-  const handleLoginSuccess = useCallback((userName) => {
+  const handleLoginSuccess = useCallback((userName, isVerified, userId) => {
     if (userName) localStorage.setItem("userName", userName);
+
+    if (!isVerified) {
+      // Show OTP resend option
+      setUnverifiedUserId(userId);
+      navigate("/verify-account", { replace: true });
+      return;
+    }
+
     setIsAuthenticated(true);
     navigate('/dashboard', { replace: true });
   }, [navigate]);
@@ -66,8 +74,8 @@ function App() {
         <Route
           path="/signup"
           element={
-            isAuthenticated 
-              ? <Navigate to="/dashboard" replace />
+            isAuthenticated
+              ? <Navigate to="/login" replace />
               : <SignUp />
           }
         />
@@ -76,8 +84,8 @@ function App() {
         <Route
           path="/login"
           element={
-            isAuthenticated 
-              ? <Navigate to="/dashboard" replace /> 
+            isAuthenticated
+              ? <Navigate to="/dashboard" replace />
               : <LoginForm onLoginSuccess={handleLoginSuccess} />
           }
         />
@@ -87,7 +95,7 @@ function App() {
           path="/verify-account"
           element={
             isAuthenticated
-              ? <Navigate to="/dashboard" replace />
+              ? <Navigate to="/login" replace />
               : <VerifyAccount unverifiedUserId={unverifiedUserId} />
           }
         />
@@ -96,8 +104,8 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            isAuthenticated 
-              ? <UserDashboard onLogout={handleLogout} /> 
+            isAuthenticated
+              ? <UserDashboard onLogout={handleLogout} />
               : <Navigate to="/login" replace />
           }
         />

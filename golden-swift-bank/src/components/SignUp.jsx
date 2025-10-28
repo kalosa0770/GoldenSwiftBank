@@ -53,31 +53,33 @@ const SignUp = () => {
       setError("Password does not meet all complexity requirements.");
       return;
     }
-
+  
     setError("");
     setIsLoading(true);
-
+  
     try {
       const res = await axios.post(`${API_BASE_URL}/api/users`, data);
+  
       if (res.status === 201) {
         const userId = res.data?.user?._id;
-
+  
+        // Show success toast
         setShowSuccess(true);
         setProgress(100);
-
-        // Start the 3-second countdown animation
-        let interval = setInterval(() => {
+  
+        // Countdown redirect to verify page
+        const interval = setInterval(() => {
           setProgress(prev => {
             if (prev <= 0) {
               clearInterval(interval);
-              // Redirect to verify account page with userId
+              setShowSuccess(false); // hide toast
               navigate('/verify-account', { state: { userId } });
               return 0;
             }
             return prev - 2;
           });
         }, 60);
-
+  
       } else {
         setError("Signup failed. Please try again.");
       }
@@ -87,6 +89,7 @@ const SignUp = () => {
       setIsLoading(false);
     }
   };
+  
 
   const isFormValid = passwordValidations.every(rule => rule.valid) &&
     data.firstName && data.lastName && data.email && data.password;
