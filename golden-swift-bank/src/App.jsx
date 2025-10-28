@@ -75,7 +75,7 @@ function App() {
           path="/signup"
           element={
             isAuthenticated
-              ? <Navigate to="/login" replace />
+              ? <Navigate to="/verify-account" replace />
               : <SignUp />
           }
         />
