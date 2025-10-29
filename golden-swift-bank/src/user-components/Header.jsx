@@ -4,7 +4,7 @@ import logo from "../assets/logo.jpeg";
 
 const Header = () => {
   return (
-    <header className="flex justify-between items-center w-full bg-white p-3 sm:p-4 shadow-sm border-b border-gray-100 sticky top-0 z-20">
+    <header className="flex justify-between items-center w-full bg-gray-100 rounded-2xl p-3 sm:p-4 shadow-sm border-b border-gray-100 sticky top-0 z-20">
       {/* Left: Logo / Brand */}
       <div className="flex items-center gap-2 cursor-pointer hover:scale-[1.03] transition-transform duration-200">
         <img

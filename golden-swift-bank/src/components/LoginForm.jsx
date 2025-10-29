@@ -37,40 +37,42 @@ const LoginForm = ({ onLoginSuccess }) => {
     setIsLoading(true);
     setStatusMessage(null);
     setUserIdToVerify(null);
-
+  
     try {
       const response = await axios.post(`${API_BASE_URL}/api/auth`, data, { withCredentials: true });
       console.log("Login response:", response.data);
       const { userName, isAccountVerified, userId } = response.data;
-
+  
       if (!isAccountVerified) {
         navigate('/verify-account', { state: { userId } });
         return;
       }
-
-      // ✅ Immediately call onLoginSuccess to update App state
-      if (onLoginSuccess) onLoginSuccess(userName, isAccountVerified, userId);
-
-      if (isAccountVerified) {
-        setShowSuccessModal(true);
-        setModalProgress(100);
-
-        const interval = setInterval(() => {
-          setModalProgress(prev => {
-            if (prev <= 0) {
-              clearInterval(interval);
-              setShowSuccessModal(false);
-              navigate('/dashboard', { replace: true });
-              return 0;
-            }
-            return prev - 2;
-          });
-        }, 60);
+  
+      // ✅ Call onLoginSuccess and wait for state update
+      if (onLoginSuccess) {
+        onLoginSuccess(userName, isAccountVerified, userId);
       }
+  
+      // ✅ Show success modal and navigate
+      setShowSuccessModal(true);
+      setModalProgress(100);
+  
+      const interval = setInterval(() => {
+        setModalProgress(prev => {
+          if (prev <= 0) {
+            clearInterval(interval);
+            setShowSuccessModal(false);
+            navigate('/dashboard', { replace: true });
+            return 0;
+          }
+          return prev - 2;
+        });
+      }, 60);
+  
     } catch (err) {
       const responseStatus = err.response?.status;
       const responseData = err.response?.data;
-
+  
       if (responseStatus === 403 && responseData?.userId) {
         setStatusMessage({
           text: responseData.message || 'Your account is not verified. Please resend the OTP.',
@@ -78,13 +80,13 @@ const LoginForm = ({ onLoginSuccess }) => {
         });
         setUserIdToVerify(responseData.userId);
       } else {
-        setError(responseData?.message || 'Login failed. Please check your credentials.');
+        // ✅ Fix: Use the exact same error message as backend
+        setError(responseData?.message || 'Invalid Email or Password!');
       }
     } finally {
       setIsLoading(false);
     }
   };
-
   const handleResendOtp = async () => {
     if (!userIdToVerify) return;
     setOtpSending(true);

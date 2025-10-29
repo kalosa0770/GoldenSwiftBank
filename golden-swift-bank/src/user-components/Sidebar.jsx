@@ -11,13 +11,13 @@ const Sidebar = ({ onLogout }) => {
   ];
 
   return (
-    <aside className="hidden md:flex flex-col w-[250px] bg-gradient-to-b from-gray-100 to-gray-200 text-gray-800 p-6 shadow-xl sticky top-0 h-screen">
+    <aside className="hidden md:flex flex-col w-[250px] bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-6 shadow-xl sticky top-0 h-screen">
       {/* Branding */}
       <div className="mb-10 pt-4 pb-6 border-b border-amber-400">
-        <h1 className="text-2xl font-black tracking-wider text-gray-900">
+        <h1 className="text-2xl font-black tracking-wider text-white">
           Golden Swift
         </h1>
-        <p className="text-xs text-gray-600 mt-1">All-in-One Wallet for People</p>
+        <p className="text-xs text-white mt-1">All-in-One Wallet for People</p>
       </div>
 
       {/* Navigation */}
@@ -30,7 +30,7 @@ const Sidebar = ({ onLogout }) => {
               `flex items-center p-3 rounded-xl font-medium transition duration-200 ${
                 isActive
                   ? "bg-gradient-to-br from-amber-600 to-amber-400 text-white shadow-lg"
-                  : "text-gray-800 hover:bg-gradient-to-br hover:from-amber-500 hover:to-amber-300 hover:text-white"
+                  : "text-white hover:bg-gradient-to-br hover:from-amber-500 hover:to-amber-300 hover:text-white"
               }`
             }
           >

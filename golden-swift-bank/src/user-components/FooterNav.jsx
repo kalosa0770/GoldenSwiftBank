@@ -11,13 +11,13 @@ const FooterNav = ({ active = 'Home', onLogout }) => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white shadow-[0_-4px_10px_rgba(0,0,0,0.05)] pt-2 pb-safe md:hidden">
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white shadow-[0_-4px_10px_rgba(0,0,0,0.05)] pt-2 pb-safe md:hidden">
       <div className="flex justify-around items-center h-16 max-w-xl mx-auto">
         {navItems.map((item) => {
           const isActive = item.name === active;
 
-          const iconColor = isActive ? 'text-amber-500' : 'text-gray-900';
-          const textColor = isActive ? 'text-amber-500 font-bold' : 'text-gray-600';
+          const iconColor = isActive ? 'text-amber-500' : 'text-white';
+          const textColor = isActive ? 'text-amber-500 font-bold' : 'text-white';
 
           return (
             <button
