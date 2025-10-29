@@ -14,6 +14,10 @@ const VerifyAccount = () => {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleBack = () => {
+    window.history.back();
+  }
+
   // --- Send OTP ---
   const handleSendOtp = async () => {
     if (!userId) {
@@ -50,6 +54,9 @@ const VerifyAccount = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <div className="flex">
+          <button onClick={handleBack} className='py-3 px-4 bg-amber-700 text-white absolute rounded-2xl left-6 top-6 cursor-pointer'>Back</button>
+        </div>
       <h1 className="text-2xl font-bold mb-6">Verify Your Account</h1>
 
       {message && (

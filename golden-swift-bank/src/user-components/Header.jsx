@@ -19,6 +19,7 @@ const Header = () => {
           <p className="text-gray-500 text-xs font-medium">
             Your Digital Wallet
           </p>
+          
         </div>
       </div>
 

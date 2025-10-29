@@ -47,6 +47,10 @@ const SignUp = () => {
     if (name === 'password') checkPasswordComplexity(value);
   };
 
+  const handleBack = () => {
+    window.history.back();
+  }
+
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (!passwordValidations.every(rule => rule.valid)) {
@@ -118,7 +122,10 @@ const SignUp = () => {
         </div>
       )}
 
-      <div className="relative z-10 flex w-full items-center justify-center">
+      <div className="relative z-10 flex fklex-col w-full items-center justify-center">
+        <div className="flex">
+          <button onClick={handleBack} className='py-3 px-4 bg-amber-700 text-white absolute rounded-2xl left-6 top-6 cursor-pointer'>Back</button>
+        </div>
         <div className="md:flex block w-full max-w-4xl bg-white rounded-2xl shadow-2xl shadow-blue-500/60 overflow-hidden">
 
           {/* Left Column */}
