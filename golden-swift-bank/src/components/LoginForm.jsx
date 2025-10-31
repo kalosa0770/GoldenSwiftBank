@@ -4,7 +4,8 @@ import axios from 'axios';
 import { CheckCircle } from 'lucide-react';
 import manImg from '../assets/manImg.jpeg';
 
-const API_BASE_URL = 'http://localhost:3001';
+const VITE_BASE_URL = import.meta.env.VITE_APP_API_URL;
+const API_BASE_URL = VITE_BASE_URL || 'http://localhost:3001';
 
 const LoginForm = ({ onLoginSuccess }) => {
   const location = useLocation();
