@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, ArrowLeft } from 'lucide-react';
 import manImg from '../assets/manImg.jpeg';
 
 const VITE_BASE_URL = import.meta.env.VITE_APP_API_URL;
@@ -129,9 +129,10 @@ const LoginForm = ({ onLoginSuccess }) => {
       )}
 
       <div className="relative z-10 flex flex-col w-full items-center justify-center">
-        <div className="flex">
-          <button onClick={handleBack} className='py-3 px-4 bg-amber-700 text-white absolute rounded-2xl left-6 top-6 cursor-pointer'>Back</button>
-          </div>
+        {/* The Back button is now positioned directly in the relative container,
+             and uses slightly adjusted coordinates for better visual alignment. */}
+        <button onClick={handleBack} className='py-3 px-4 bg-amber-700 text-white absolute rounded-2xl left-4 top-4 cursor-pointer z-20 flex gap-1'> <ArrowLeft />Back</button>
+        
         <div className="md:flex block w-full max-w-4xl bg-white rounded-2xl shadow-2xl shadow-blue-500/60 overflow-hidden">
 
           {/* Left */}
