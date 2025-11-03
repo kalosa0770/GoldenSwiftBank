@@ -53,21 +53,23 @@ const LoginForm = ({ onLoginSuccess }) => {
         return;
       }
   
-      // ✅ Call onLoginSuccess and wait for state update
-      if (onLoginSuccess) {
-        onLoginSuccess(userName, isAccountVerified, userId);
-      }
-  
-      // ✅ Show success modal and navigate
+      // ✅ Show success modal and START the countdown immediately
       setShowSuccessModal(true);
       setModalProgress(100);
   
+      // Navigation and state update are now delayed until the modal animation finishes
       const interval = setInterval(() => {
         setModalProgress(prev => {
           if (prev <= 0) {
             clearInterval(interval);
             setShowSuccessModal(false);
+            
+            // ⭐ MOVED LOGIC: Update parent state and navigate AFTER modal closes ⭐
+            if (onLoginSuccess) {
+              onLoginSuccess(userName, isAccountVerified, userId);
+            }
             navigate('/dashboard', { replace: true });
+            
             return 0;
           }
           return prev - 2;
