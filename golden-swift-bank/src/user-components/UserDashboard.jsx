@@ -16,7 +16,10 @@ const API_BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:3001'
 
 const UserDashboard = ({ onLogout }) => {
   const navigate = useNavigate();
-  const [uiUserName, setUiUserName] = useState(localStorage.getItem('userName'));
+  const [uiFirstName, setUiFirstName] = useState(null); 
+  const [uiLastName, setUiLastName] = useState(null);  
+  const [uiEmail, setUiEmail] = useState(null);
+  const [uiPhoneNumber, setUiPhoneNumber] = useState(null);
   const [isSessionValid, setIsSessionValid] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -28,7 +31,7 @@ const UserDashboard = ({ onLogout }) => {
         });
 
         if (response.status === 200) {
-          const { userName, isAccountVerified, _id } = response.data;
+          const { firstName, lastName, isAccountVerified, _id, email, phoneNumber } = response.data;
 
           if (!isAccountVerified) {
             navigate('/verify-account', { state: { userId: _id } });
@@ -37,10 +40,23 @@ const UserDashboard = ({ onLogout }) => {
 
           setIsSessionValid(true);
 
-          if (userName) {
-            setUiUserName(userName);
-            localStorage.setItem('userName', userName);
+          if (firstName) {
+            setUiFirstName(firstName);
+            localStorage.setItem('firstName', firstName);
           }
+          if (lastName) {
+            setUiLastName(lastName);
+            localStorage.setItem('lastName', lastName);
+          }
+          if (email) {
+            setUiEmail(email);
+            localStorage.setItem('email', email);
+          }
+          if (phoneNumber) {
+            setUiPhoneNumber(phoneNumber);
+            localStorage.setItem('phoneNumber', phoneNumber);
+          }
+
         } else {
           handleFailedAuth();
         }
@@ -54,7 +70,10 @@ const UserDashboard = ({ onLogout }) => {
 
     const handleFailedAuth = () => {
       if (onLogout) onLogout();
-      localStorage.removeItem('userName');
+      localStorage.removeItem('firstName');
+      localStorage.removeItem('lastName');
+      localStorage.removeItem('email');
+      localStorage.removeItem('phoneNumber');
       navigate('/login', { replace: true });
     };
 
@@ -89,7 +108,7 @@ const UserDashboard = ({ onLogout }) => {
         <main className="flex flex-col flex-1 gap-8 px-6 md:px-10 py-8 overflow-y-auto no-scrollbar">
           
           {/* Greeting + Balance */}
-          <Greeting userName={uiUserName} />
+          <Greeting firstName={uiFirstName} lastName={uiLastName}/>
 
           {/* Quick Action Buttons */}
           {/* <ActionButtons /> */}
@@ -103,7 +122,8 @@ const UserDashboard = ({ onLogout }) => {
             <VirtualCard
               bank="GoldenSwift Bank"
               cardNumber="4567890123456789"
-              cardHolder={uiUserName || "User"}
+              firstName={uiFirstName  || "User"}
+              lastName= {uiLastName}
               expiry="12/29"
               className="w-full max-w-md"
             />

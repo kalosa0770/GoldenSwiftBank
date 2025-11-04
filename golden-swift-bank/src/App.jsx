@@ -22,8 +22,12 @@ function App() {
   const navigate = useNavigate();
 
   // --- Login Success Handler ---
-  const handleLoginSuccess = useCallback((userName, isVerified, userId) => {
-    if (userName) localStorage.setItem("userName", userName);
+  const handleLoginSuccess = useCallback((firstName, lastName, email, phoneNumber, isVerified, userId) => {
+    if (firstName) localStorage.setItem("firstName", firstName);
+    if (lastName) localStorage.setItem("lastName", lastName);
+    if (email) localStorage.setItem("email", email);
+    if (phoneNumber) localStorage.setItem("phoneNumber", phoneNumber);
+
 
     if (!isVerified) {
       setUnverifiedUserId(userId);
@@ -43,7 +47,10 @@ function App() {
     } catch (error) {
       console.error("Logout failed:", error);
     }
-    localStorage.removeItem("userName");
+    localStorage.removeItem("firstName");
+    localStorage.removeItem("lastName");
+    localStorage.removeItem("email");
+    localStorage.removeItem("phoneNumber");    
     setIsAuthenticated(false);
     navigate('/login', { replace: true, state: { message: "You have successfully logged out.", type: 'success' } });
   }, [navigate]);
@@ -56,7 +63,10 @@ function App() {
         setIsAuthenticated(true);
       } catch {
         setIsAuthenticated(false);
-        localStorage.removeItem("userName");
+        localStorage.removeItem("firstName");
+        localStorage.removeItem("lastName");
+        localStorage.removeItem("email");
+        localStorage.removeItem("phoneNumber"); 
       }
     };
     verifyInitialSession();

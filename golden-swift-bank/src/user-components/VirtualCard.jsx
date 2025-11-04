@@ -16,7 +16,8 @@ const maskCardNumber = (rawNumber) => {
 const VirtualCard = ({
   bank = 'Golden Swift Bank',
   cardNumber = '4567890123456789',
-  cardHolder = 'GOLDEN SWIFT',
+  firstName = 'GOLDEN',
+  lasName = 'Swift',
   expiry = '12/29',
 }) => {
   const maskedNumber = maskCardNumber(cardNumber);
@@ -51,7 +52,7 @@ const VirtualCard = ({
         <div className="flex justify-between items-center text-xs pt-4 z-10 relative">
           <div className="flex flex-col">
             <span className="text-amber-100 opacity-90 text-[0.6rem] tracking-wider">CARD HOLDER</span>
-            <span className="text-sm font-semibold uppercase tracking-wider">{cardHolder}</span>
+            <span className="text-sm font-semibold uppercase tracking-wider">{firstName} {lasName}</span>
           </div>
           <div className="flex flex-col items-end">
             <span className="text-amber-100 opacity-90 text-[0.6rem] tracking-wider">EXPIRES</span>

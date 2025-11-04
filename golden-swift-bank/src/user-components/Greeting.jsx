@@ -9,7 +9,7 @@ const getGreeting = () => {
   return "Good evening";
 };
 
-const Greeting = ({ userName }) => {
+const Greeting = ({ firstName, lastName }) => {
   const [greeting, setGreeting] = useState("");
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Greeting = ({ userName }) => {
         <h1 className="font-nunito font-extrabold text-2xl md:text-3xl tracking-tight leading-snug">
           {greeting},{" "}
           <span className="text-yellow-400 drop-shadow-[0_0_6px_rgba(255,215,0,0.6)]">
-            {userName}
+            {firstName} {" "} {lastName}
           </span>
         </h1>
       </div>

@@ -75,13 +75,13 @@ const SendMoneyForm = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
             <h2 className="text-xl font-bold text-gray-700 mb-4 flex items-center">
                 <Send className="w-5 h-5 mr-2 text-amber-500" />
-                Standard Peer-to-Peer Transfer
+                Transfer Funds
             </h2>
-            <p className="text-gray-500">Send money instantly to another local mobile wallet user.</p>
+            <p className="text-gray-500">Send money instantly to another local wallet user.</p>
 
             {/* Recipient Input */}
             <div>
-                <label htmlFor="recipient" className="block text-sm font-medium text-gray-700 mb-2">Recipient Mobile Number/ID</label>
+                <label htmlFor="recipient" className="block text-sm font-medium text-gray-700 mb-2">Recipient Mobile Number</label>
                 <div className="relative">
                     <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
@@ -89,7 +89,7 @@ const SendMoneyForm = () => {
                         type="text"
                         value={recipient}
                         onChange={(e) => setRecipient(e.target.value)}
-                        placeholder="e.g., 260977xxxxxx or username"
+                        placeholder="e.g., 260977xxxxxx"
                         required
                         className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-amber-500 focus:border-amber-500 shadow-sm"
                     />
@@ -113,7 +113,7 @@ const SendMoneyForm = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="sourceCurrency" className="block text-sm font-medium text-gray-700 mb-2">Source Wallet</label>
+                    <label htmlFor="sourceCurrency" className="block text-sm font-medium text-gray-700 mb-2">Currency</label>
                     <select
                         id="sourceCurrency"
                         value={sourceCurrency}
