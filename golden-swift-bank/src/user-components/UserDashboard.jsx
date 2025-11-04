@@ -5,10 +5,7 @@ import axios from 'axios';
 // Import components
 import Header from './Header';
 import Greeting from './Greeting';
-import ActionButtons from './ActionButtons';
 import DashboardWidgets from './DashboardWidgets';
-import Announcements from './Announcements';
-import ShortcutAccess from './ShortcutAccess';
 import Chatbot from './Chatbot';
 import MyWallets from './MyWallets';
 import VirtualCard from './VirtualCard';

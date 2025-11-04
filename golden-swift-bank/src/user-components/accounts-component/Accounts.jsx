@@ -53,7 +53,7 @@ const SettingItem = ({ icon: Icon, title, description, actionText, onClick }) =>
  * Accounts Component
  * Displays user profile, security settings, and application preferences.
  */
-const Accounts = () => {
+const Accounts = ({onLogout}) => {
     // Simulated action handler
     const handleAction = (setting) => {
         console.log(`[Action] Attempting to manage: ${setting}`);
@@ -181,13 +181,13 @@ const Accounts = () => {
                         {/* 5. Logout Button */}
                         <div className="mt-12 pt-6 border-t border-gray-300">
                             <button
-                                onClick={() => handleAction('Logout')}
+                                onClick={onLogout}
                                 className="w-full flex items-center justify-center py-3 px-4 text-lg font-bold rounded-xl text-white bg-red-600 hover:bg-red-700 transition transform hover:scale-[1.005] shadow-lg shadow-red-500/50"
                             >
                                 <LogOut className="w-5 h-5 mr-3" />
-                                Log Out of Golden Swift
+                                Log Out
                             </button>
-                            <p className="text-center text-xs text-gray-400 mt-3">Securely disconnect your session.</p>
+                            
                         </div>
                     </div>
                 </div>

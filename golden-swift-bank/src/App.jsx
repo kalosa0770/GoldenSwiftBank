@@ -45,7 +45,7 @@ function App() {
     }
     localStorage.removeItem("userName");
     setIsAuthenticated(false);
-    navigate('/login', { replace: true, state: { message: "You have been logged out.", type: 'success' } });
+    navigate('/login', { replace: true, state: { message: "You have successfully logged out.", type: 'success' } });
   }, [navigate]);
 
   // --- Verify initial session ---
@@ -122,7 +122,7 @@ function App() {
         />
         <Route path='/transfer' element= {<Transfer />}/>
         <Route path='/wallet' element= {<MyWallet />}/>
-        <Route path='/account' element={<Accounts />} />
+        <Route path='/account' element={<Accounts onLogout={handleLogout} />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
