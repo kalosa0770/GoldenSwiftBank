@@ -1,11 +1,11 @@
 import React from "react";
-import { CreditCard, DollarSign, PieChart, Phone } from "lucide-react";
+import { CreditCard, DollarSign, Zap, Cog } from "lucide-react";
 
 const shortcuts = [
   { name: "Transfer", icon: DollarSign },
-  { name: "Pay Bills", icon: CreditCard },
-  { name: "Analytics", icon: PieChart },
-  { name: "Airtime", icon: Phone },
+  { name: "Wallet", icon: CreditCard },
+  { name: "Transactions", icon: Zap },
+  { name: "Settings", icon: Cog },
 ];
 
 const ShortcutAccess = () => {

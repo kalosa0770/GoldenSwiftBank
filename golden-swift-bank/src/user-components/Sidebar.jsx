@@ -4,10 +4,10 @@ import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ onLogout }) => {
   const navItems = [
-    { name: "Home", icon: Home },
-    { name: "Transfer", icon: Zap },
-    { name: "Wallet", icon: DollarSign },
-    { name: "Account", icon: User },
+    { name: "dashboard", icon: Home },
+    { name: "transfer", icon: Zap },
+    { name: "wallet", icon: DollarSign },
+    { name: "account", icon: User },
   ];
 
   return (

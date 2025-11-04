@@ -31,13 +31,10 @@ const Greeting = ({ userName }) => {
             {userName}
           </span>
         </h1>
-        <p className="text-gray-300 text-sm md:text-base mt-2">
-          Welcome back to <span className="text-amber-400 font-semibold">Golden Swift</span> — let’s make your money move smartly.
-        </p>
       </div>
 
       {/* Balance + Insights */}
-      <div className="relative mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
         {/* Balance Card */}
         <div className="bg-gray-800 border border-yellow-400/10 p-5 rounded-2xl">
           <CheckBalance />

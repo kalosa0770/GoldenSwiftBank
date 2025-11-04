@@ -8,6 +8,10 @@ import VerifyAccount from "./components/VerifyAccount";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPasswordOTP from "./components/ResetPasswordOTP"; // <-- New Import
 import UserDashboard from "./user-components/UserDashboard";
+import Transfer from './user-components/transfer-components/Transfer';
+import MyWallet from './user-components/wallets/MyWallet';
+import Accounts from './user-components/accounts-component/Accounts';
+
 
 axios.defaults.withCredentials = true; // crucial for cookies
 const API_BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:3001';
@@ -114,7 +118,11 @@ function App() {
               ? <UserDashboard onLogout={handleLogout} />
               : <Navigate to="/login" replace />
           }
+        
         />
+        <Route path='/transfer' element= {<Transfer />}/>
+        <Route path='/wallet' element= {<MyWallet />}/>
+        <Route path='/account' element={<Accounts />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

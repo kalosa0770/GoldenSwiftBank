@@ -14,7 +14,7 @@ const CheckBalance = () => {
           <div className="p-2 bg-blue-100 rounded-xl">
             <Wallet className="w-5 h-5 text-blue-600" />
           </div>
-          <h2 className="text-gray-800 font-semibold text-lg tracking-wide">
+          <h2 className="text-white font-semibold text-lg tracking-wide">
             Main Balance
           </h2>
         </div>
