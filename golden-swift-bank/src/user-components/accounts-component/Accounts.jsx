@@ -15,7 +15,7 @@ import {
     FileText,
     LogOut // LogOut icon imported for the new button
 } from 'lucide-react';
-import { Sidebar } from 'lucide-react';
+import Sidebar from '../Sidebar';
 import FooterNav from '../FooterNav';
 
 
@@ -67,7 +67,7 @@ const Accounts = ({onLogout}) => {
                         <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-100 mb-10">
                             <div className="flex items-center border-b pb-5 mb-5">
                                 <div className="w-16 h-16 bg-amber-500 text-white flex items-center justify-center rounded-full text-2xl font-bold mr-6 shadow-lg">
-                                    {uiFirstName.charAt(0)}{uiLastName.charAt(0)}
+                                    {(uiFirstName?.charAt(0) || '') + (uiLastName?.charAt(0) || '')}
                                 </div>
                                 <div>
                                     <h2 className="2xl font-bold text-gray-800 flex items-center">
