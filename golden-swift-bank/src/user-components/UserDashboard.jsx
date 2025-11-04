@@ -16,10 +16,10 @@ const API_BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:3001'
 
 const UserDashboard = ({ onLogout }) => {
   const navigate = useNavigate();
-  const [uiFirstName, setUiFirstName] = useState(null); 
-  const [uiLastName, setUiLastName] = useState(null);  
-  const [uiEmail, setUiEmail] = useState(null);
-  const [uiPhoneNumber, setUiPhoneNumber] = useState(null);
+  const [uiFirstName, setUiFirstName] = useState(localStorage.getItem('firstName'));
+  const [uiLastName, setUiLastName] = useState(localStorage.getItem('lastName'));
+  const [uiEmail, setUiEmail] = useState(localStorage.getItem('email'));
+  const [uiPhoneNumber, setUiPhoneNumber] = useState(localStorage.getItem('phoneNumber'));
   const [isSessionValid, setIsSessionValid] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
